@@ -20,7 +20,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    if: ${{ secrets.INFOMANIAK_FTP_HOST != '' && vars.INFOMANIAK_SERVER_DIR != '' }}
+    # The secrets context is not allowed in job-level if; the vars gate alone
+    # keeps the job skipped until the deployment target is explicitly set.
+    if: ${{ vars.INFOMANIAK_SERVER_DIR != '' }}
     steps:
       - uses: actions/checkout@v4
       - name: Deploy via FTPS
