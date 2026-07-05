@@ -3,7 +3,7 @@ const STRINGS = {
     'app.tagline': 'Générez votre skill Claude personnalisé',
     'home.heroTitle': 'Des skills Claude taillés pour votre contexte',
     'home.heroSubtitle':
-      'Un bon skill embarque votre jargon, vos projets et vos enjeux. Répondez à quelques questions et repartez avec un skill prêt à installer — vos réponses ne quittent jamais votre navigateur.',
+      'Un bon skill embarque votre jargon, vos projets et vos enjeux. Conçu pour vos réunions récurrentes : répondez une fois à quelques questions, puis relancez simplement le skill à chaque réunion — vos réponses ne quittent jamais votre navigateur.',
     'home.available': 'Disponible',
     'home.soon': 'Bientôt',
     'card.customize': 'Personnaliser',
@@ -15,6 +15,8 @@ const STRINGS = {
     'wizard.optional': '(optionnel)',
     'wizard.privacy':
       '🔒 Confidentialité : tout se passe dans votre navigateur. Aucune réponse n’est envoyée à un serveur.',
+    'wizard.onceNote':
+      '🔁 Un investissement unique : ces quelques étapes (~5 min) configurent un skill fait pour vos réunions récurrentes. Vous répondez une fois — ensuite, à chaque réunion, vous lancez simplement le skill avec votre transcript.',
     'wizard.notFound': 'Skill introuvable. Retournez au catalogue.',
     'out.title': 'Votre skill est prêt 🎉',
     'out.subtitle': 'Deux façons de l’utiliser — choisissez celle qui vous convient.',
@@ -43,7 +45,7 @@ const STRINGS = {
     'app.tagline': 'Generate your personalized Claude skill',
     'home.heroTitle': 'Claude skills tailored to your context',
     'home.heroSubtitle':
-      'A good skill carries your jargon, your projects and your stakes. Answer a few questions and leave with a ready-to-install skill — your answers never leave your browser.',
+      'A good skill carries your jargon, your projects and your stakes. Built for your recurring meetings: answer a few questions once, then simply run the skill at every meeting — your answers never leave your browser.',
     'home.available': 'Available',
     'home.soon': 'Coming soon',
     'card.customize': 'Customize',
@@ -55,6 +57,8 @@ const STRINGS = {
     'wizard.optional': '(optional)',
     'wizard.privacy':
       '🔒 Privacy: everything happens in your browser. No answer is ever sent to a server.',
+    'wizard.onceNote':
+      '🔁 A one-time investment: these few steps (~5 min) configure a skill built for your recurring meetings. You answer once — then, at every meeting, you simply run the skill with your transcript.',
     'wizard.notFound': 'Skill not found. Go back to the catalog.',
     'out.title': 'Your skill is ready 🎉',
     'out.subtitle': 'Two ways to use it — pick the one that suits you.',

@@ -49,6 +49,7 @@ function renderStep() {
     <div class="step-count">${t('wizard.step', state.stepIndex + 1, steps.length)}</div>
     <h2></h2>
     <p class="step-intro"></p>
+    ${state.stepIndex === 0 ? `<div class="privacy-note">${t('wizard.onceNote')}</div>` : ''}
     ${step.privacy ? `<div class="privacy-note">${t('wizard.privacy')}</div>` : ''}
     <form id="step-form" novalidate></form>
     <div class="wizard-nav">

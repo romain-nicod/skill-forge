@@ -1,0 +1,147 @@
+{
+  "id": "meeting-coach",
+  "name": {
+    "fr": "Coach de réunion",
+    "en": "Meeting coach"
+  },
+  "steps": [
+    {
+      "id": "context",
+      "title": { "fr": "Votre contexte", "en": "Your context" },
+      "intro": {
+        "fr": "Ce skill produit un briefing de coaching strictement personnel — il analyse vos réunions pour vous, jamais pour être diffusé.",
+        "en": "This skill produces a strictly personal coaching briefing — it analyzes your meetings for you, never for distribution."
+      },
+      "questions": [
+        {
+          "id": "organization",
+          "variable": "organization",
+          "type": "text",
+          "label": { "fr": "Votre organisation ou équipe", "en": "Your organization or team" },
+          "placeholder": { "fr": "ex. Direction des systèmes d'information, Acme Corp", "en": "e.g. IT Department, Acme Corp" }
+        },
+        {
+          "id": "user_name",
+          "variable": "user_name",
+          "type": "text",
+          "label": { "fr": "Votre nom (vous êtes la personne coachée)", "en": "Your name (you are the person being coached)" },
+          "placeholder": { "fr": "ex. Romain N.", "en": "e.g. Sarah K." }
+        },
+        {
+          "id": "user_role",
+          "variable": "user_role",
+          "type": "text",
+          "optional": true,
+          "label": { "fr": "Votre rôle dans ces réunions", "en": "Your role in these meetings" },
+          "placeholder": { "fr": "ex. chef de projet, animateur du weekly, sponsor", "en": "e.g. project manager, weekly facilitator, sponsor" }
+        },
+        {
+          "id": "meeting_types",
+          "variable": "meeting_types",
+          "type": "text",
+          "label": { "fr": "Réunions à analyser", "en": "Meetings to analyze" },
+          "placeholder": { "fr": "ex. hebdo projet, comité de pilotage mensuel", "en": "e.g. weekly project sync, monthly steering committee" }
+        }
+      ]
+    },
+    {
+      "id": "people",
+      "privacy": true,
+      "title": { "fr": "Les acteurs", "en": "The people" },
+      "intro": {
+        "fr": "Qui participe ? Ces éléments nourrissent la lecture des dynamiques — ils restent dans le skill, jamais dans un document diffusé.",
+        "en": "Who attends? This feeds the reading of the dynamics — it stays in the skill, never in a shared document."
+      },
+      "questions": [
+        {
+          "id": "stakeholders",
+          "variable": "stakeholders",
+          "type": "textarea",
+          "optional": true,
+          "label": { "fr": "Participants récurrents et rôles", "en": "Recurring participants and roles" },
+          "help": {
+            "fr": "Un par ligne : prénom + initiale, rôle, équipe ou partie.",
+            "en": "One per line: first name + initial, role, team or party."
+          },
+          "placeholder": { "fr": "Sophie M. — sponsor, direction financière\nKarim B. — chef de projet MOE", "en": "Sophie M. — sponsor, finance\nKarim B. — delivery lead" }
+        },
+        {
+          "id": "politics",
+          "variable": "politics",
+          "type": "textarea",
+          "optional": true,
+          "label": { "fr": "Sensibilités et rapports de force", "en": "Sensitivities and power dynamics" },
+          "placeholder": { "fr": "Le sponsor pousse une échéance jugée irréaliste par l'équipe", "en": "The sponsor pushes a deadline the team finds unrealistic" }
+        },
+        {
+          "id": "goals",
+          "variable": "goals",
+          "type": "textarea",
+          "optional": true,
+          "label": { "fr": "Vos objectifs personnels dans ces réunions", "en": "Your personal goals in these meetings" },
+          "help": {
+            "fr": "Ce que vous cherchez à obtenir ou à améliorer — le coach mesurera vos interventions à cette aune.",
+            "en": "What you are trying to achieve or improve — the coach will measure your contributions against this."
+          },
+          "placeholder": { "fr": "Faire aboutir les décisions en une réunion\nÊtre moins dans la justification, plus dans la proposition", "en": "Get decisions closed within one meeting\nLess justifying, more proposing" }
+        }
+      ]
+    },
+    {
+      "id": "focus",
+      "title": { "fr": "Axes de coaching", "en": "Coaching focus" },
+      "questions": [
+        {
+          "id": "focus",
+          "variable": "focus",
+          "type": "multiselect",
+          "label": { "fr": "Que doit analyser le coach ?", "en": "What should the coach analyze?" },
+          "options": [
+            { "value": "blind_spots", "default": true, "label": { "fr": "Angles morts — ce que la salle a raté (erreurs non challengées, angles SWOT ignorés)", "en": "Blind spots — what the room missed (unchallenged errors, ignored SWOT angles)" } },
+            { "value": "politics_reading", "default": true, "label": { "fr": "Lecture politique — qui pousse quoi, désaccords tus, jeux d'influence", "en": "Political reading — who pushes what, unvoiced disagreements, influence games" } },
+            { "value": "self_analysis", "default": true, "label": { "fr": "Auto-analyse — vos propositions, vos choix rhétoriques, les idées qu'on vous reprend", "en": "Self-analysis — your proposals, your rhetorical choices, ideas taken from you" } },
+            { "value": "speaking_dynamics", "default": true, "label": { "fr": "Dynamique de parole — répartition du temps, qui interrompt qui, qui ne parle jamais", "en": "Speaking dynamics — time distribution, who interrupts whom, who never speaks" } },
+            { "value": "lingering_decisions", "default": true, "label": { "fr": "Décisions qui traînent — sujets rouverts de réunion en réunion sans porteur", "en": "Lingering decisions — topics reopened meeting after meeting without an owner" } },
+            { "value": "rituals", "default": true, "label": { "fr": "Rituels — hygiène de réunion : ordre du jour, dépassements, sujets toujours reportés", "en": "Rituals — meeting hygiene: agenda discipline, overruns, perpetually deferred topics" } }
+          ]
+        },
+        {
+          "id": "candor",
+          "variable": "candor",
+          "type": "select",
+          "label": { "fr": "Niveau de franchise du coach", "en": "Coach's level of candor" },
+          "options": [
+            { "value": "direct", "default": true, "label": { "fr": "Direct — dites-moi ce qui ne va pas, sans détour", "en": "Direct — tell me what's wrong, no sugar-coating" } },
+            { "value": "balanced", "label": { "fr": "Équilibré — franchise sur le fond, formulation soignée", "en": "Balanced — candid on substance, careful in wording" } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "output",
+      "title": { "fr": "Langue", "en": "Language" },
+      "questions": [
+        {
+          "id": "output_language",
+          "variable": "output_language",
+          "type": "select",
+          "label": { "fr": "Langue des briefings de coaching", "en": "Language of the coaching briefings" },
+          "options": [
+            { "value": "fr", "default": true, "label": { "fr": "Français", "en": "French" } },
+            { "value": "en", "label": { "fr": "Anglais", "en": "English" } }
+          ]
+        },
+        {
+          "id": "skill_language",
+          "variable": "skill_language",
+          "type": "select",
+          "label": { "fr": "Langue de rédaction du skill lui-même", "en": "Language the skill itself is written in" },
+          "options": [
+            { "value": "fr", "default": true, "label": { "fr": "Français", "en": "French" } },
+            { "value": "en", "label": { "fr": "Anglais", "en": "English" } }
+          ]
+        }
+      ]
+    }
+  ]
+}
