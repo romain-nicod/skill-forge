@@ -29,7 +29,7 @@
     {
       "id": "backlog-scanner",
       "icon": "📋",
-      "available": false,
+      "available": true,
       "name": {
         "fr": "Extraction de backlog",
         "en": "Backlog scanner"

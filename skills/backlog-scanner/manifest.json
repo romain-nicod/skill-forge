@@ -1,0 +1,162 @@
+{
+  "id": "backlog-scanner",
+  "name": {
+    "fr": "Extraction de backlog",
+    "en": "Backlog scanner"
+  },
+  "steps": [
+    {
+      "id": "context",
+      "title": { "fr": "Votre contexte", "en": "Your context" },
+      "intro": {
+        "fr": "Ces informations permettent au skill de comprendre votre produit et d'employer les bons termes.",
+        "en": "This information lets the skill understand your product and use the right terms."
+      },
+      "questions": [
+        {
+          "id": "organization",
+          "variable": "organization",
+          "type": "text",
+          "label": { "fr": "Votre organisation ou équipe", "en": "Your organization or team" },
+          "placeholder": { "fr": "ex. Direction produit, Acme Corp", "en": "e.g. Product team, Acme Corp" }
+        },
+        {
+          "id": "domain",
+          "variable": "domain",
+          "type": "text",
+          "optional": true,
+          "label": { "fr": "Votre domaine métier", "en": "Your business domain" },
+          "placeholder": { "fr": "ex. assurance, logistique, secteur public…", "en": "e.g. insurance, logistics, public sector…" }
+        },
+        {
+          "id": "products",
+          "variable": "products",
+          "type": "textarea",
+          "optional": true,
+          "label": { "fr": "Produits ou périmètres couverts", "en": "Products or scopes covered" },
+          "help": {
+            "fr": "Un par ligne : nom du produit/périmètre et, le cas échéant, son préfixe de référence backlog.",
+            "en": "One per line: product/scope name and, if applicable, its backlog reference prefix."
+          },
+          "placeholder": { "fr": "Orion — produit pilote (réfs ORI-NNN)\nPlateforme — socle commun (réfs ATL-NNN)", "en": "Orion — pilot product (refs ORI-NNN)\nPlatform — shared foundation (refs ATL-NNN)" }
+        },
+        {
+          "id": "glossary",
+          "variable": "glossary",
+          "type": "textarea",
+          "optional": true,
+          "label": { "fr": "Acronymes et termes internes", "en": "Acronyms and internal terms" },
+          "help": {
+            "fr": "Un par ligne, au format « TERME = signification ».",
+            "en": "One per line, in the form “TERM = meaning”."
+          },
+          "placeholder": { "fr": "MOA = maîtrise d'ouvrage\nRUN = équipe d'exploitation", "en": "SteerCo = steering committee\nBAU = business as usual team" }
+        }
+      ]
+    },
+    {
+      "id": "backlog",
+      "title": { "fr": "Votre backlog", "en": "Your backlog" },
+      "intro": {
+        "fr": "Où vivent vos items, qui les trie, et comment vous les priorisez.",
+        "en": "Where your items live, who triages them, and how you prioritize them."
+      },
+      "questions": [
+        {
+          "id": "backlog_tool",
+          "variable": "backlog_tool",
+          "type": "select",
+          "label": { "fr": "Où est géré votre backlog ?", "en": "Where is your backlog managed?" },
+          "options": [
+            { "value": "github", "default": true, "label": { "fr": "GitHub (issues / projects)", "en": "GitHub (issues / projects)" } },
+            { "value": "jira", "label": { "fr": "Jira", "en": "Jira" } },
+            { "value": "azure", "label": { "fr": "Azure DevOps", "en": "Azure DevOps" } },
+            { "value": "sheet", "label": { "fr": "Tableur (Excel, Sheets…)", "en": "Spreadsheet (Excel, Sheets…)" } },
+            { "value": "other", "label": { "fr": "Autre outil", "en": "Another tool" } }
+          ]
+        },
+        {
+          "id": "gatekeeper",
+          "variable": "gatekeeper",
+          "type": "text",
+          "optional": true,
+          "label": { "fr": "Qui fait le tri (shortlisting) avant l'entrée au backlog ?", "en": "Who shortlists candidates before they enter the backlog?" },
+          "placeholder": { "fr": "ex. Camille R. (product owner)", "en": "e.g. Camille R. (product owner)" }
+        },
+        {
+          "id": "existing_refs",
+          "variable": "existing_refs",
+          "type": "textarea",
+          "optional": true,
+          "label": { "fr": "Conventions de référence des items existants", "en": "Reference conventions for existing items" },
+          "help": {
+            "fr": "Pour la déduplication : préfixes et ce qu'ils désignent.",
+            "en": "Used for deduplication: prefixes and what they designate."
+          },
+          "placeholder": { "fr": "ORI-NNN = items spécifiques Orion\nATL-NNN = items plateforme", "en": "ORI-NNN = Orion-specific items\nATL-NNN = platform-wide items" }
+        },
+        {
+          "id": "priority_scheme",
+          "variable": "priority_scheme",
+          "type": "textarea",
+          "optional": true,
+          "label": { "fr": "Vos définitions de priorité, si différentes de P1/P2/P3", "en": "Your priority definitions, if different from P1/P2/P3" },
+          "help": {
+            "fr": "Par défaut : P1 = bloque le travail en cours ou le run · P2 = nécessaire pour le prochain jalon · P3 = confort, sans pression immédiate.",
+            "en": "Default: P1 = blocks current work or run operations · P2 = needed for the next milestone · P3 = nice to have, no immediate pressure."
+          },
+          "placeholder": { "fr": "ex. MoSCoW : Must / Should / Could / Won't", "en": "e.g. MoSCoW: Must / Should / Could / Won't" }
+        }
+      ]
+    },
+    {
+      "id": "stories",
+      "title": { "fr": "Vos user stories", "en": "Your user stories" },
+      "questions": [
+        {
+          "id": "roles",
+          "variable": "roles",
+          "type": "textarea",
+          "optional": true,
+          "label": { "fr": "Les rôles réels de vos utilisateurs", "en": "Your users' actual roles" },
+          "help": {
+            "fr": "Les stories seront écrites avec ces rôles plutôt qu'un générique « en tant qu'utilisateur ».",
+            "en": "Stories will be written with these roles rather than a generic “as a user”."
+          },
+          "placeholder": { "fr": "analyste actuariel\nadministrateur de plateforme\nsuper-utilisateur\nchef de service", "en": "actuarial analyst\nplatform administrator\nsuper-user\ndepartment head" }
+        }
+      ]
+    },
+    {
+      "id": "output",
+      "title": { "fr": "Langue", "en": "Language" },
+      "questions": [
+        {
+          "id": "output_language",
+          "variable": "output_language",
+          "type": "select",
+          "label": { "fr": "Langue des fichiers backlog produits", "en": "Language of the produced backlog files" },
+          "options": [
+            { "value": "fr", "default": true, "label": { "fr": "Français", "en": "French" } },
+            { "value": "en", "label": { "fr": "Anglais", "en": "English" } },
+            { "value": "source", "label": { "fr": "La même que la source scannée", "en": "Same as the scanned source" } }
+          ]
+        },
+        {
+          "id": "skill_language",
+          "variable": "skill_language",
+          "type": "select",
+          "label": { "fr": "Langue de rédaction du skill lui-même", "en": "Language the skill itself is written in" },
+          "help": {
+            "fr": "Les instructions en anglais sont souvent légèrement mieux suivies par Claude.",
+            "en": "English instructions are often followed slightly better by Claude."
+          },
+          "options": [
+            { "value": "fr", "default": true, "label": { "fr": "Français", "en": "French" } },
+            { "value": "en", "label": { "fr": "Anglais", "en": "English" } }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 /**
  * Minimal mustache-like template engine.
- * Supports: {{var}}, {{#if var}}…{{/if}}, {{#each var}}…{{this}}…{{/each}}.
+ * Supports: {{var}}, {{#if var}}…{{/if}}, {{^if var}}…{{/if}} (inverted),
+ * {{#each var}}…{{this}}…{{/each}}.
  * Truthiness: non-empty trimmed string, true, non-empty array.
  * Blocks can be nested ({{#if}} inside {{#if}}): innermost blocks are
  * resolved first, repeatedly, until no block remains.
@@ -13,8 +14,8 @@ function truthy(value) {
 }
 
 // Matches an innermost block: its body contains no other block opener.
-const IF_INNERMOST = /\{\{#if ([\w-]+)\}\}((?:(?!\{\{#(?:if|each) )[\s\S])*?)\{\{\/if\}\}/;
-const EACH_INNERMOST = /\{\{#each ([\w-]+)\}\}((?:(?!\{\{#(?:if|each) )[\s\S])*?)\{\{\/each\}\}/;
+const IF_INNERMOST = /\{\{([#^])if ([\w-]+)\}\}((?:(?!\{\{[#^](?:if|each) )[\s\S])*?)\{\{\/if\}\}/;
+const EACH_INNERMOST = /\{\{#each ([\w-]+)\}\}((?:(?!\{\{[#^](?:if|each) )[\s\S])*?)\{\{\/each\}\}/;
 
 export function render(template, vars) {
   let out = template;
@@ -25,8 +26,9 @@ export function render(template, vars) {
     while (changed) {
       changed = false;
       while ((match = IF_INNERMOST.exec(out))) {
-        const [whole, key, body] = match;
-        out = out.slice(0, match.index) + (truthy(vars[key]) ? body : '') + out.slice(match.index + whole.length);
+        const [whole, sigil, key, body] = match;
+        const keep = sigil === '#' ? truthy(vars[key]) : !truthy(vars[key]);
+        out = out.slice(0, match.index) + (keep ? body : '') + out.slice(match.index + whole.length);
         changed = true;
       }
       while ((match = EACH_INNERMOST.exec(out))) {
