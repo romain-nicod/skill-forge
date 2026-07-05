@@ -30,7 +30,7 @@
             "fr": "Format recommandé « Prénom N. ». Vous serez nommé comme les autres participants — jamais désigné par votre seul rôle.",
             "en": "Recommended format “FirstName L.”. You will be named like every other participant — never referred to by role alone."
           },
-          "placeholder": { "fr": "ex. Romain N.", "en": "e.g. Sarah K." }
+          "placeholder": { "fr": "ex. Claire D.", "en": "e.g. Sarah K." }
         },
         {
           "id": "domain",

@@ -1,0 +1,39 @@
+name: Deploy to Infomaniak (FTP)
+
+# Requires three repository secrets (Settings → Secrets and variables → Actions):
+#   INFOMANIAK_FTP_HOST      e.g. xxxxx.ftp.infomaniak.com
+#   INFOMANIAK_FTP_USER      the FTP account username (ideally an account
+#                            restricted to the target site's folder)
+#   INFOMANIAK_FTP_PASSWORD  the FTP account password
+# And one repository variable (Settings → Secrets and variables → Actions → Variables):
+#   INFOMANIAK_SERVER_DIR    target directory, e.g. "/" for a restricted FTP
+#                            account, or "/sites/forge.example.com/"
+# There is deliberately NO default target directory: the job is skipped until
+# both the secrets and the variable are configured, so it can never overwrite
+# an existing site by accident.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ secrets.INFOMANIAK_FTP_HOST != '' && vars.INFOMANIAK_SERVER_DIR != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.INFOMANIAK_FTP_HOST }}
+          username: ${{ secrets.INFOMANIAK_FTP_USER }}
+          password: ${{ secrets.INFOMANIAK_FTP_PASSWORD }}
+          protocol: ftps
+          server-dir: ${{ vars.INFOMANIAK_SERVER_DIR }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/node_modules/**
+            **/README.md

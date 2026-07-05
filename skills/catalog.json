@@ -16,14 +16,14 @@
     {
       "id": "meeting-coach",
       "icon": "🎯",
-      "available": false,
+      "available": true,
       "name": {
         "fr": "Coach de réunion",
         "en": "Meeting coach"
       },
       "description": {
-        "fr": "Analyse vos réunions dans la durée : temps de parole, décisions qui traînent, rituels à améliorer.",
-        "en": "Analyzes your meetings over time: speaking time, lingering decisions, rituals to improve."
+        "fr": "Un coach privé, jamais diffusé : angles morts, lecture politique, auto-analyse de vos interventions, temps de parole, décisions qui traînent, rituels à améliorer.",
+        "en": "A private coach, never shared: blind spots, political reading, self-analysis of your contributions, speaking time, lingering decisions, rituals to improve."
       }
     },
     {

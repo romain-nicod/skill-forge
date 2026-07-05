@@ -25,6 +25,18 @@ python3 -m http.server 8000
 Le workflow `.github/workflows/pages.yml` publie le site à chaque push sur `main`.
 Une seule action manuelle est nécessaire : dans **Settings → Pages** du repo, choisir **Source : GitHub Actions**.
 
+## Déployer sur Infomaniak (ou tout hébergement FTP)
+
+Le workflow `.github/workflows/deploy-infomaniak.yml` pousse le site par FTPS à chaque push sur `main`, dès que trois secrets sont configurés dans **Settings → Secrets and variables → Actions** :
+
+| Secret | Valeur |
+|--------|--------|
+| `INFOMANIAK_FTP_HOST` | hôte FTP (ex. `xxxxx.ftp.infomaniak.com`, visible dans Manager → Hébergement Web → FTP/SSH) |
+| `INFOMANIAK_FTP_USER` | utilisateur FTP |
+| `INFOMANIAK_FTP_PASSWORD` | mot de passe FTP |
+
+Il faut aussi définir la **variable** `INFOMANIAK_SERVER_DIR` (onglet *Variables*) : le dossier cible, ex. `/` pour un compte FTP restreint au dossier du site, ou `/sites/forge.example.com/`. **Il n'y a volontairement aucun dossier par défaut** : tant que les secrets et la variable ne sont pas définis, le job est ignoré — impossible d'écraser un site existant par accident. Recommandation : créez un compte FTP dédié, restreint au dossier du sous-domaine. Le site étant 100 % statique, un simple glisser-déposer des fichiers dans le Web FTP du Manager fonctionne aussi.
+
 ## Installer un skill généré
 
 - **claude.ai** : Paramètres → Capacités → Skills → téléverser le `.zip`.
@@ -56,7 +68,7 @@ skills/
 ## Feuille de route
 
 - [x] Fusionner le skill `meeting-minutes` original de l'auteur dans les templates (v3.7 — méthodologie généralisée : test d'autorité des décisions, grille risque/hypothèse/dépendance, test d'admission backlog, passe de consolidation par sujet, filtre de contenu sensible, vérification post-production, briefing privé avec angles morts et auto-analyse)
-- [ ] Coach de réunion (analyse des rituels dans la durée)
+- [x] Coach de réunion (briefing privé jamais diffusé : angles morts, lecture politique, auto-analyse, dynamique de parole, décisions qui traînent, rituels)
 - [x] Extraction de backlog (user stories depuis transcripts — méthodologie fusionnée : familles de signaux, règle du besoin-sans-solution, déduplication, test INVEST)
 - [ ] Débrief candidat (fiches d'évaluation comparables)
 - [ ] Partage d'une configuration via lien
