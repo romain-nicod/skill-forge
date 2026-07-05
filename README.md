@@ -35,7 +35,7 @@ Le workflow `.github/workflows/deploy-infomaniak.yml` pousse le site par FTPS à
 | `INFOMANIAK_FTP_USER` | utilisateur FTP |
 | `INFOMANIAK_FTP_PASSWORD` | mot de passe FTP |
 
-Variable optionnelle `INFOMANIAK_SERVER_DIR` pour changer le dossier cible (défaut : `/web/`). Tant que les secrets ne sont pas définis, le job est simplement ignoré. Le site étant 100 % statique, un simple upload des fichiers dans le dossier `web/` (glisser-déposer dans le Web FTP du Manager) fonctionne aussi.
+Il faut aussi définir la **variable** `INFOMANIAK_SERVER_DIR` (onglet *Variables*) : le dossier cible, ex. `/` pour un compte FTP restreint au dossier du site, ou `/sites/forge.example.com/`. **Il n'y a volontairement aucun dossier par défaut** : tant que les secrets et la variable ne sont pas définis, le job est ignoré — impossible d'écraser un site existant par accident. Recommandation : créez un compte FTP dédié, restreint au dossier du sous-domaine. Le site étant 100 % statique, un simple glisser-déposer des fichiers dans le Web FTP du Manager fonctionne aussi.
 
 ## Installer un skill généré
 
