@@ -21,6 +21,18 @@
           "placeholder": { "fr": "ex. Direction des systèmes d'information, Acme Corp", "en": "e.g. IT Department, Acme Corp" }
         },
         {
+          "id": "user_name",
+          "variable": "user_name",
+          "type": "text",
+          "optional": true,
+          "label": { "fr": "Votre nom, tel qu'il doit apparaître dans les comptes-rendus", "en": "Your name, as it should appear in the minutes" },
+          "help": {
+            "fr": "Format recommandé « Prénom N. ». Vous serez nommé comme les autres participants — jamais désigné par votre seul rôle.",
+            "en": "Recommended format “FirstName L.”. You will be named like every other participant — never referred to by role alone."
+          },
+          "placeholder": { "fr": "ex. Romain N.", "en": "e.g. Sarah K." }
+        },
+        {
           "id": "domain",
           "variable": "domain",
           "type": "text",
@@ -91,10 +103,22 @@
           "optional": true,
           "label": { "fr": "Participants récurrents et rôles", "en": "Recurring participants and roles" },
           "help": {
-            "fr": "Un par ligne : prénom/nom (ou initiales), rôle, équipe.",
-            "en": "One per line: name (or initials), role, team."
+            "fr": "Un par ligne : prénom + initiale (ou nom), rôle, équipe ou partie.",
+            "en": "One per line: first name + initial (or full name), role, team or party."
           },
           "placeholder": { "fr": "Sophie M. — sponsor, direction financière\nKarim B. — chef de projet MOE\nLéa T. — product owner", "en": "Sophie M. — sponsor, finance\nKarim B. — delivery lead\nLéa T. — product owner" }
+        },
+        {
+          "id": "decision_authority",
+          "variable": "decision_authority",
+          "type": "text",
+          "optional": true,
+          "label": { "fr": "Qui détient l'autorité de décision dans ces réunions ?", "en": "Who holds decision authority in these meetings?" },
+          "help": {
+            "fr": "Essentiel pour distinguer une vraie décision d'un choix d'exécution annoncé par une autre partie (prestataire, équipe technique…).",
+            "en": "Essential to tell a real decision from an implementation choice announced by another party (vendor, technical team…)."
+          },
+          "placeholder": { "fr": "ex. le client : Sophie M. (sponsor) et Léa T. (product owner) — pas le prestataire", "en": "e.g. the client side: Sophie M. (sponsor) and Léa T. (product owner) — not the vendor" }
         },
         {
           "id": "politics",
@@ -119,7 +143,7 @@
           "variable": "meeting_types",
           "type": "text",
           "label": { "fr": "Types de réunions concernés", "en": "Meeting types covered" },
-          "placeholder": { "fr": "ex. hebdo projet, comité de pilotage, ateliers de cadrage", "en": "e.g. weekly project sync, steering committee, scoping workshops" }
+          "placeholder": { "fr": "ex. hebdo projet le mercredi 10h, comité de pilotage mensuel", "en": "e.g. weekly project sync on Wednesdays 10am, monthly steering committee" }
         },
         {
           "id": "transcript_tool",
@@ -139,32 +163,57 @@
       "id": "sections",
       "title": { "fr": "Contenu du compte-rendu", "en": "Minutes content" },
       "intro": {
-        "fr": "Choisissez les sections que le skill doit produire. Tout est activé par défaut — décochez ce qui ne vous sert pas.",
-        "en": "Pick the sections the skill should produce. Everything is on by default — untick what you don't need."
+        "fr": "Choisissez les sections du compte-rendu et les documents compagnons. Le compte-rendu reste neutre et diffusable ; l'analyse sensible va dans le briefing privé.",
+        "en": "Pick the minutes sections and companion documents. The minutes stay neutral and shareable; sensitive analysis goes into the private briefing."
       },
       "questions": [
         {
           "id": "sections",
           "variable": "sections",
           "type": "multiselect",
-          "label": { "fr": "Sections à générer", "en": "Sections to generate" },
+          "label": { "fr": "Sections du compte-rendu", "en": "Minutes sections" },
           "options": [
             { "value": "exec_summary", "default": true, "label": { "fr": "Résumé exécutif", "en": "Executive summary" } },
             { "value": "decisions", "default": true, "label": { "fr": "Décisions", "en": "Decisions" } },
             { "value": "actions", "default": true, "label": { "fr": "Actions (porteur + échéance)", "en": "Actions (owner + due date)" } },
-            { "value": "risks", "default": true, "label": { "fr": "Risques", "en": "Risks" } },
-            { "value": "assumptions", "default": true, "label": { "fr": "Hypothèses à valider", "en": "Assumptions to validate" } },
+            { "value": "risks", "default": true, "label": { "fr": "Risques, hypothèses et dépendances", "en": "Risks, assumptions and dependencies" } },
             { "value": "open_points", "default": true, "label": { "fr": "Points ouverts", "en": "Open points" } },
-            { "value": "blind_spots", "default": true, "label": { "fr": "Angles morts", "en": "Blind spots" } },
-            { "value": "politics", "default": true, "label": { "fr": "Lecture politique et sous-texte (usage interne)", "en": "Political reading and subtext (internal use)" } }
+            { "value": "backlog", "default": true, "label": { "fr": "Candidats backlog (idées à trier)", "en": "Backlog candidates (ideas to triage)" } },
+            { "value": "meeting_notes", "default": true, "label": { "fr": "Notes de réunion (prose par sujet)", "en": "Meeting notes (prose by topic)" } }
+          ]
+        },
+        {
+          "id": "companions",
+          "variable": "companions",
+          "type": "multiselect",
+          "optional": true,
+          "label": { "fr": "Documents compagnons", "en": "Companion documents" },
+          "help": {
+            "fr": "Produits en plus du compte-rendu, dans des fichiers séparés.",
+            "en": "Produced alongside the minutes, as separate files."
+          },
+          "options": [
+            { "value": "private_briefing", "default": true, "label": { "fr": "Briefing privé — angles morts, lecture politique, auto-analyse. Jamais diffusé.", "en": "Private briefing — blind spots, political reading, self-analysis. Never shared." } },
+            { "value": "backlog_file", "label": { "fr": "Fichier backlog séparé (user stories détaillées)", "en": "Standalone backlog file (detailed user stories)" } },
+            { "value": "email_drafts", "label": { "fr": "Brouillons d'e-mails aux parties prenantes", "en": "Email drafts to stakeholders" } }
           ]
         }
       ]
     },
     {
       "id": "style",
-      "title": { "fr": "Ton et format", "en": "Tone and format" },
+      "title": { "fr": "Ton, format et workflow", "en": "Tone, format and workflow" },
       "questions": [
+        {
+          "id": "workflow",
+          "variable": "workflow",
+          "type": "select",
+          "label": { "fr": "Mode de travail du skill", "en": "How the skill works with you" },
+          "options": [
+            { "value": "interactive", "default": true, "label": { "fr": "Interactif — Claude fait arbitrer les points sensibles et les ambiguïtés avant de rédiger", "en": "Interactive — Claude has you arbitrate sensitive items and ambiguities before drafting" } },
+            { "value": "oneshot", "label": { "fr": "Direct — Claude produit immédiatement et signale ses doutes dans le document", "en": "Direct — Claude produces immediately and flags its doubts in the document" } }
+          ]
+        },
         {
           "id": "detail_level",
           "variable": "detail_level",

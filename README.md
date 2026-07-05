@@ -55,7 +55,7 @@ skills/
 
 ## Feuille de route
 
-- [ ] Fusionner le skill `meeting-minutes` original de l'auteur dans les templates
+- [x] Fusionner le skill `meeting-minutes` original de l'auteur dans les templates (v3.7 — méthodologie généralisée : test d'autorité des décisions, grille risque/hypothèse/dépendance, test d'admission backlog, passe de consolidation par sujet, filtre de contenu sensible, vérification post-production, briefing privé avec angles morts et auto-analyse)
 - [ ] Coach de réunion (analyse des rituels dans la durée)
 - [ ] Extraction de backlog (user stories depuis transcripts)
 - [ ] Débrief candidat (fiches d'évaluation comparables)
