@@ -25,7 +25,7 @@
           "variable": "user_name",
           "type": "text",
           "label": { "fr": "Votre nom (vous êtes la personne coachée)", "en": "Your name (you are the person being coached)" },
-          "placeholder": { "fr": "ex. Romain N.", "en": "e.g. Sarah K." }
+          "placeholder": { "fr": "ex. Malik B.", "en": "e.g. Emma J." }
         },
         {
           "id": "user_role",

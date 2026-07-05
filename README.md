@@ -68,7 +68,7 @@ skills/
 ## Feuille de route
 
 - [x] Fusionner le skill `meeting-minutes` original de l'auteur dans les templates (v3.7 — méthodologie généralisée : test d'autorité des décisions, grille risque/hypothèse/dépendance, test d'admission backlog, passe de consolidation par sujet, filtre de contenu sensible, vérification post-production, briefing privé avec angles morts et auto-analyse)
-- [x] Coach de réunion (briefing privé issu de la doctrine hors-minutes : angles morts, lecture politique, auto-analyse, dynamique de parole, décisions qui traînent, rituels)
+- [x] Coach de réunion (briefing privé jamais diffusé : angles morts, lecture politique, auto-analyse, dynamique de parole, décisions qui traînent, rituels)
 - [x] Extraction de backlog (user stories depuis transcripts — méthodologie fusionnée : familles de signaux, règle du besoin-sans-solution, déduplication, test INVEST)
 - [ ] Débrief candidat (fiches d'évaluation comparables)
 - [ ] Partage d'une configuration via lien

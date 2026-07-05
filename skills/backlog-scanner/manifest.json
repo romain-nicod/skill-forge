@@ -38,7 +38,7 @@
             "fr": "Un par ligne : nom du produit/périmètre et, le cas échéant, son préfixe de référence backlog.",
             "en": "One per line: product/scope name and, if applicable, its backlog reference prefix."
           },
-          "placeholder": { "fr": "Orion — produit pilote (réfs ORI-NNN)\nPlateforme — socle commun (réfs ATL-NNN)", "en": "Orion — pilot product (refs ORI-NNN)\nPlatform — shared foundation (refs ATL-NNN)" }
+          "placeholder": { "fr": "Orion — application mobile client (réfs ORI-NNN)\nAtlas — socle API commun (réfs ATL-NNN)", "en": "Orion — customer mobile app (refs ORI-NNN)\nAtlas — shared API platform (refs ATL-NNN)" }
         },
         {
           "id": "glossary",
@@ -81,7 +81,7 @@
           "type": "text",
           "optional": true,
           "label": { "fr": "Qui fait le tri (shortlisting) avant l'entrée au backlog ?", "en": "Who shortlists candidates before they enter the backlog?" },
-          "placeholder": { "fr": "ex. Camille R. (product owner)", "en": "e.g. Camille R. (product owner)" }
+          "placeholder": { "fr": "ex. Camille R. (product owner)", "en": "e.g. Priya S. (product owner)" }
         },
         {
           "id": "existing_refs",
@@ -93,7 +93,7 @@
             "fr": "Pour la déduplication : préfixes et ce qu'ils désignent.",
             "en": "Used for deduplication: prefixes and what they designate."
           },
-          "placeholder": { "fr": "ORI-NNN = items spécifiques Orion\nATL-NNN = items plateforme", "en": "ORI-NNN = Orion-specific items\nATL-NNN = platform-wide items" }
+          "placeholder": { "fr": "ORI-NNN = items de l'app mobile Orion\nATL-NNN = items du socle commun", "en": "ORI-NNN = Orion mobile app items\nATL-NNN = shared platform items" }
         },
         {
           "id": "priority_scheme",
@@ -123,7 +123,7 @@
             "fr": "Les stories seront écrites avec ces rôles plutôt qu'un générique « en tant qu'utilisateur ».",
             "en": "Stories will be written with these roles rather than a generic “as a user”."
           },
-          "placeholder": { "fr": "analyste actuariel\nadministrateur de plateforme\nsuper-utilisateur\nchef de service", "en": "actuarial analyst\nplatform administrator\nsuper-user\ndepartment head" }
+          "placeholder": { "fr": "chargée de clientèle\nadministrateur de plateforme\nresponsable conformité\ncheffe d'équipe support", "en": "account manager\nplatform administrator\ncompliance officer\nsupport team lead" }
         }
       ]
     },

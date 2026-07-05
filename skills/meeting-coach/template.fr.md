@@ -6,7 +6,7 @@ description: >-
   briefing de coaching strictement privé (angles morts, lecture politique,
   auto-analyse, dynamique de parole, décisions qui traînent, rituels).
   Utiliser quand l'utilisateur dit « coach », « coache-moi », « débrief de
-  ma réunion », « hors-minutes », « analyse cette réunion pour moi », ou
+  ma réunion », « débrief privé », « analyse cette réunion pour moi », ou
   fournit un transcript en demandant un regard personnel.
 ---
 
