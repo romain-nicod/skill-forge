@@ -1,0 +1,217 @@
+{
+  "id": "meeting-minutes",
+  "name": {
+    "fr": "Comptes-rendus de réunion",
+    "en": "Meeting minutes"
+  },
+  "steps": [
+    {
+      "id": "context",
+      "title": { "fr": "Votre contexte", "en": "Your context" },
+      "intro": {
+        "fr": "Ces informations permettent au skill de comprendre votre environnement et d'employer les bons termes.",
+        "en": "This information lets the skill understand your environment and use the right terms."
+      },
+      "questions": [
+        {
+          "id": "organization",
+          "variable": "organization",
+          "type": "text",
+          "label": { "fr": "Votre organisation ou équipe", "en": "Your organization or team" },
+          "placeholder": { "fr": "ex. Direction des systèmes d'information, Acme Corp", "en": "e.g. IT Department, Acme Corp" }
+        },
+        {
+          "id": "domain",
+          "variable": "domain",
+          "type": "text",
+          "optional": true,
+          "label": { "fr": "Votre domaine métier", "en": "Your business domain" },
+          "placeholder": { "fr": "ex. banque de détail, logistique, secteur public…", "en": "e.g. retail banking, logistics, public sector…" }
+        },
+        {
+          "id": "projects",
+          "variable": "projects",
+          "type": "textarea",
+          "optional": true,
+          "label": { "fr": "Projets ou programmes suivis", "en": "Projects or programs you track" },
+          "help": {
+            "fr": "Un par ligne : nom, objectif en quelques mots, jalons importants.",
+            "en": "One per line: name, goal in a few words, key milestones."
+          },
+          "placeholder": { "fr": "Projet Atlas — migration CRM, go-live prévu T3\nProgramme Data — mise en conformité RGPD", "en": "Project Atlas — CRM migration, go-live planned Q3\nData Program — GDPR compliance" }
+        },
+        {
+          "id": "meeting_language",
+          "variable": "meeting_language",
+          "type": "select",
+          "label": { "fr": "Langue de vos réunions", "en": "Language of your meetings" },
+          "options": [
+            { "value": "fr", "default": true, "label": { "fr": "Français", "en": "French" } },
+            { "value": "en", "label": { "fr": "Anglais", "en": "English" } },
+            { "value": "mixed", "label": { "fr": "Mixte / bilingue", "en": "Mixed / bilingual" } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "glossary",
+      "title": { "fr": "Glossaire et jargon", "en": "Glossary and jargon" },
+      "intro": {
+        "fr": "Les transcripts automatiques massacrent les acronymes. Votre glossaire permet au skill de les corriger et de les employer correctement.",
+        "en": "Automatic transcripts butcher acronyms. Your glossary lets the skill fix and use them correctly."
+      },
+      "questions": [
+        {
+          "id": "glossary",
+          "variable": "glossary",
+          "type": "textarea",
+          "optional": true,
+          "label": { "fr": "Acronymes et termes internes", "en": "Acronyms and internal terms" },
+          "help": {
+            "fr": "Un par ligne, au format « TERME = signification ».",
+            "en": "One per line, in the form “TERM = meaning”."
+          },
+          "placeholder": { "fr": "MOA = maîtrise d'ouvrage\nCoproj = comité projet hebdomadaire\nRUN = équipe d'exploitation", "en": "SteerCo = steering committee\nRAID = risks, assumptions, issues, dependencies\nBAU = business as usual team" }
+        }
+      ]
+    },
+    {
+      "id": "people",
+      "privacy": true,
+      "title": { "fr": "Les acteurs", "en": "The people" },
+      "intro": {
+        "fr": "Qui participe à vos réunions ? Ces éléments aident le skill à attribuer les propos et à lire les dynamiques.",
+        "en": "Who attends your meetings? This helps the skill attribute statements and read the dynamics."
+      },
+      "questions": [
+        {
+          "id": "stakeholders",
+          "variable": "stakeholders",
+          "type": "textarea",
+          "optional": true,
+          "label": { "fr": "Participants récurrents et rôles", "en": "Recurring participants and roles" },
+          "help": {
+            "fr": "Un par ligne : prénom/nom (ou initiales), rôle, équipe.",
+            "en": "One per line: name (or initials), role, team."
+          },
+          "placeholder": { "fr": "Sophie M. — sponsor, direction financière\nKarim B. — chef de projet MOE\nLéa T. — product owner", "en": "Sophie M. — sponsor, finance\nKarim B. — delivery lead\nLéa T. — product owner" }
+        },
+        {
+          "id": "politics",
+          "variable": "politics",
+          "type": "textarea",
+          "optional": true,
+          "label": { "fr": "Sensibilités et rapports de force", "en": "Sensitivities and power dynamics" },
+          "help": {
+            "fr": "Tensions connues, sujets délicats, alliances… Ces notes restent dans le skill, jamais recopiées telles quelles dans un compte-rendu.",
+            "en": "Known tensions, delicate topics, alliances… These notes stay in the skill, never copied verbatim into minutes."
+          },
+          "placeholder": { "fr": "La DSI et le métier se renvoient la responsabilité des retards\nLe sponsor pousse une échéance jugée irréaliste par l'équipe", "en": "IT and business blame each other for delays\nThe sponsor pushes a deadline the team finds unrealistic" }
+        }
+      ]
+    },
+    {
+      "id": "meetings",
+      "title": { "fr": "Vos réunions", "en": "Your meetings" },
+      "questions": [
+        {
+          "id": "meeting_types",
+          "variable": "meeting_types",
+          "type": "text",
+          "label": { "fr": "Types de réunions concernés", "en": "Meeting types covered" },
+          "placeholder": { "fr": "ex. hebdo projet, comité de pilotage, ateliers de cadrage", "en": "e.g. weekly project sync, steering committee, scoping workshops" }
+        },
+        {
+          "id": "transcript_tool",
+          "variable": "transcript_tool",
+          "type": "select",
+          "label": { "fr": "D'où viennent vos transcripts ?", "en": "Where do your transcripts come from?" },
+          "options": [
+            { "value": "teams", "default": true, "label": { "fr": "Microsoft Teams / Copilot", "en": "Microsoft Teams / Copilot" } },
+            { "value": "meet", "label": { "fr": "Google Meet", "en": "Google Meet" } },
+            { "value": "zoom", "label": { "fr": "Zoom", "en": "Zoom" } },
+            { "value": "other", "label": { "fr": "Autre / plusieurs outils", "en": "Other / several tools" } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sections",
+      "title": { "fr": "Contenu du compte-rendu", "en": "Minutes content" },
+      "intro": {
+        "fr": "Choisissez les sections que le skill doit produire. Tout est activé par défaut — décochez ce qui ne vous sert pas.",
+        "en": "Pick the sections the skill should produce. Everything is on by default — untick what you don't need."
+      },
+      "questions": [
+        {
+          "id": "sections",
+          "variable": "sections",
+          "type": "multiselect",
+          "label": { "fr": "Sections à générer", "en": "Sections to generate" },
+          "options": [
+            { "value": "exec_summary", "default": true, "label": { "fr": "Résumé exécutif", "en": "Executive summary" } },
+            { "value": "decisions", "default": true, "label": { "fr": "Décisions", "en": "Decisions" } },
+            { "value": "actions", "default": true, "label": { "fr": "Actions (porteur + échéance)", "en": "Actions (owner + due date)" } },
+            { "value": "risks", "default": true, "label": { "fr": "Risques", "en": "Risks" } },
+            { "value": "assumptions", "default": true, "label": { "fr": "Hypothèses à valider", "en": "Assumptions to validate" } },
+            { "value": "open_points", "default": true, "label": { "fr": "Points ouverts", "en": "Open points" } },
+            { "value": "blind_spots", "default": true, "label": { "fr": "Angles morts", "en": "Blind spots" } },
+            { "value": "politics", "default": true, "label": { "fr": "Lecture politique et sous-texte (usage interne)", "en": "Political reading and subtext (internal use)" } }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "style",
+      "title": { "fr": "Ton et format", "en": "Tone and format" },
+      "questions": [
+        {
+          "id": "detail_level",
+          "variable": "detail_level",
+          "type": "select",
+          "label": { "fr": "Niveau de détail", "en": "Level of detail" },
+          "options": [
+            { "value": "concise", "label": { "fr": "Concis — l'essentiel en une page", "en": "Concise — the essentials on one page" } },
+            { "value": "standard", "default": true, "label": { "fr": "Standard — complet mais dense", "en": "Standard — complete but dense" } },
+            { "value": "detailed", "label": { "fr": "Détaillé — contexte et nuances inclus", "en": "Detailed — context and nuance included" } }
+          ]
+        },
+        {
+          "id": "output_language",
+          "variable": "output_language",
+          "type": "select",
+          "label": { "fr": "Langue des comptes-rendus produits", "en": "Language of the produced minutes" },
+          "options": [
+            { "value": "fr", "default": true, "label": { "fr": "Français", "en": "French" } },
+            { "value": "en", "label": { "fr": "Anglais", "en": "English" } },
+            { "value": "transcript", "label": { "fr": "La même que le transcript", "en": "Same as the transcript" } }
+          ]
+        },
+        {
+          "id": "action_format",
+          "variable": "action_format",
+          "type": "select",
+          "label": { "fr": "Format des actions", "en": "Action items format" },
+          "options": [
+            { "value": "table", "default": true, "label": { "fr": "Tableau (action, porteur, échéance, statut)", "en": "Table (action, owner, due date, status)" } },
+            { "value": "list", "label": { "fr": "Liste à puces", "en": "Bullet list" } }
+          ]
+        },
+        {
+          "id": "skill_language",
+          "variable": "skill_language",
+          "type": "select",
+          "label": { "fr": "Langue de rédaction du skill lui-même", "en": "Language the skill itself is written in" },
+          "help": {
+            "fr": "Les instructions en anglais sont souvent légèrement mieux suivies par Claude, même pour produire des comptes-rendus en français.",
+            "en": "English instructions are often followed slightly better by Claude, even when producing French minutes."
+          },
+          "options": [
+            { "value": "fr", "default": true, "label": { "fr": "Français", "en": "French" } },
+            { "value": "en", "label": { "fr": "Anglais", "en": "English" } }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Skill Forge</title>
+  <meta name="description" content="Générez des skills Claude personnalisés à partir de votre contexte — comptes-rendus de réunion et plus." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚒️</text></svg>" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html"><span class="logo">⚒️</span> Skill Forge</a>
+      <div class="lang-toggle" role="group" aria-label="Language">
+        <button data-lang="fr">FR</button>
+        <button data-lang="en">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1 data-i18n="home.heroTitle"></h1>
+      <p data-i18n="home.heroSubtitle"></p>
+    </section>
+    <section class="cards" id="catalog" aria-live="polite"></section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container" data-i18n="footer.note"></div>
+  </footer>
+
+  <script type="module" src="js/home.js"></script>
+</body>
+</html>
