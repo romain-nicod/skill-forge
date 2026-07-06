@@ -1,5 +1,5 @@
 # ============================================================
-# skillforge.ai-gmented.pm — Security headers
+# forge.ai-gmented.pm — Security headers
 # (aligné sur le .htaccess du site maître ; aucun script inline
 #  n'est utilisé, la CSP reste donc à script-src 'self')
 # ============================================================

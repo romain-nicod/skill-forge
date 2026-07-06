@@ -1,6 +1,6 @@
 # ⚒️ Skill Forge
 
-**Un service de [AI-GMENTED.pm](https://ai-gmented.pm)** — hébergé sur [skillforge.ai-gmented.pm](https://skillforge.ai-gmented.pm).
+**Un service de [AI-GMENTED.pm](https://ai-gmented.pm)** — hébergé sur [forge.ai-gmented.pm](https://forge.ai-gmented.pm).
 
 **Licence** : code sous MIT ; templates de skills (`skills/`) © tous droits réservés, avec
 clause explicite : les skills que vous générez vous appartiennent (usage libre, y compris
