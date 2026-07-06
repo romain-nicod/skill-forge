@@ -73,7 +73,9 @@ skills/
 
 Le site reprend la charte graphique de [ai-gmented.pm](https://ai-gmented.pm) : accent orange `#C2661A`, system fonts, menu de navigation et footer du site maître. Le thème sombre (bouton lune/soleil, préférence mémorisée en localStorage) conserve l'accent orange pour les liens (`#E8853B`, éclairci pour le contraste AA).
 
-**Formulaire de contact** : il poste vers `/contact.php` sur le même sous-domaine (même mécanique CSRF/AJAX que le site maître). Pour l'activer, copier le `contact.php` du site principal dans le dossier du sous-domaine ; tant qu'il est absent, la page bascule automatiquement sur un lien e-mail direct.
+**Formulaire de contact** : il poste vers `/contact.php` (inclus dans le repo — même handler que le site maître : CSRF HMAC sans cookie, honeypot, rate limiting, envoi SMTP local Infomaniak). Il est déployé automatiquement avec le site ; sur GitHub Pages (pas de PHP), la page bascule automatiquement sur un lien e-mail direct. Durcissement recommandé : définir la variable d'environnement `CSRF_SECRET` côté serveur (sinon un secret dérivé du chemin d'installation est utilisé).
+
+**`.htaccess`** : en-têtes de sécurité identiques au site maître (CSP `script-src 'self'` — aucun script inline n'est utilisé, le thème est initialisé par `js/theme.js` chargé dans le `<head>`), HTTPS forcé, PHP bloqué sauf `contact.php`.
 
 ## Feuille de route
 
