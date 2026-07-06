@@ -20,9 +20,9 @@ async function renderCatalog() {
     card.querySelector('p').textContent = skill.description[lang];
     if (skill.available) {
       const link = document.createElement('a');
-      link.className = 'btn btn-primary cta';
+      link.className = 'cta-link';
       link.href = `generator.html?skill=${encodeURIComponent(skill.id)}`;
-      link.textContent = t('card.customize') + ' →';
+      link.innerHTML = `${t('card.customize')} <span class="arrow">→</span>`;
       card.appendChild(link);
     }
     grid.appendChild(card);

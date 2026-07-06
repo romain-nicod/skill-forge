@@ -1,5 +1,7 @@
 # ⚒️ Skill Forge
 
+**Un service de [AI-GMENTED.pm](https://ai-gmented.pm)** — hébergé sur [skillforge.ai-gmented.pm](https://skillforge.ai-gmented.pm).
+
 Générateur de skills Claude personnalisés. Un bon skill embarque le contexte de son utilisateur — jargon, projets, acteurs, enjeux. Skill Forge interviewe l'utilisateur via un questionnaire, puis génère un skill prêt à installer, **sans backend ni clé API** : tout se passe dans le navigateur.
 
 **v1 : Comptes-rendus de réunion** — à partir d'un transcript (Teams/Copilot, Meet, Zoom…), le skill généré produit décisions, actions, risques, hypothèses, points ouverts, angles morts et lecture politique, avec le regard d'un chef de projet senior.
@@ -45,13 +47,15 @@ Il faut aussi définir la **variable** `INFOMANIAK_SERVER_DIR` (onglet *Variable
 ## Architecture
 
 ```
-index.html                       Catalogue des skills
+index.html                       Catalogue des skills + CTA LinkedIn + contact
 generator.html?skill=<id>        Wizard de personnalisation (générique)
-css/style.css                    Design responsive, light/dark
+css/style.css                    Charte graphique AI-GMENTED.pm, light/dark
 js/
   app.js                         Moteur du wizard (piloté par le manifest)
   template-engine.js             Mini-moteur {{var}} / {{#if}} / {{#each}}
   i18n.js                        Bascule FR/EN
+  theme.js                       Bascule light/dark (lune/soleil) + menu mobile
+  contact.js                     Formulaire de contact (CSRF + AJAX, fallback mailto)
   output.js                      Copie + téléchargement .zip
   zip.js                         Écriture ZIP minimale (aucune dépendance)
   home.js                        Rendu du catalogue
@@ -64,6 +68,12 @@ skills/
 ```
 
 **Ajouter un skill au catalogue** = créer un dossier `skills/<id>/` (manifest + templates) et ajouter une entrée dans `skills/catalog.json`. Aucun changement de code : le wizard est entièrement piloté par le manifest.
+
+## Design & intégration AI-GMENTED.pm
+
+Le site reprend la charte graphique de [ai-gmented.pm](https://ai-gmented.pm) : accent orange `#C2661A`, system fonts, menu de navigation et footer du site maître. Le thème sombre (bouton lune/soleil, préférence mémorisée en localStorage) conserve l'accent orange pour les liens (`#E8853B`, éclairci pour le contraste AA).
+
+**Formulaire de contact** : il poste vers `/contact.php` sur le même sous-domaine (même mécanique CSRF/AJAX que le site maître). Pour l'activer, copier le `contact.php` du site principal dans le dossier du sous-domaine ; tant qu'il est absent, la page bascule automatiquement sur un lien e-mail direct.
 
 ## Feuille de route
 
