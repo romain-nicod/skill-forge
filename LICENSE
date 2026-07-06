@@ -1,0 +1,49 @@
+Skill Forge — Licensing
+=======================
+
+This repository is dual-licensed. © 2026 Romain Nicod / AI-GMENTED (ai-gmented.pm).
+
+1. CODE — MIT License
+---------------------
+Everything in this repository EXCEPT the `skills/` directory (i.e. the HTML pages,
+CSS, JavaScript, PHP contact handler and configuration files) is licensed under
+the MIT License:
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+
+2. SKILL TEMPLATES — All rights reserved, with a generated-output grant
+-----------------------------------------------------------------------
+The contents of the `skills/` directory (skill templates, meta-prompts,
+manifests and the project-management methodology they embody) are
+© 2026 Romain Nicod / AI-GMENTED — ALL RIGHTS RESERVED.
+
+You may NOT copy, redistribute, adapt, or commercialise these templates or
+derivative template collections without prior written permission
+(contact@ai-gmented.pm).
+
+GENERATED-OUTPUT GRANT: skills generated through the Skill Forge interface
+(hosted at skillforge.ai-gmented.pm or run locally) belong to the person who
+generated them. You may use, modify and share YOUR generated skills freely,
+for any purpose, including commercial use inside your organisation. Attribution
+is appreciated but not required.
+
+3. TRADEMARKS
+-------------
+"AI-GMENTED", "AI-GMENTED.pm" and the Skill Forge branding may not be used to
+endorse or promote derived products without written permission.

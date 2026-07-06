@@ -2,6 +2,10 @@
 
 **Un service de [AI-GMENTED.pm](https://ai-gmented.pm)** — hébergé sur [skillforge.ai-gmented.pm](https://skillforge.ai-gmented.pm).
 
+**Licence** : code sous MIT ; templates de skills (`skills/`) © tous droits réservés, avec
+clause explicite : les skills que vous générez vous appartiennent (usage libre, y compris
+commercial). Détails dans [LICENSE](LICENSE).
+
 Générateur de skills Claude personnalisés. Un bon skill embarque le contexte de son utilisateur — jargon, projets, acteurs, enjeux. Skill Forge interviewe l'utilisateur via un questionnaire, puis génère un skill prêt à installer, **sans backend ni clé API** : tout se passe dans le navigateur.
 
 **v1 : Comptes-rendus de réunion** — à partir d'un transcript (Teams/Copilot, Meet, Zoom…), le skill généré produit décisions, actions, risques, hypothèses, points ouverts, angles morts et lecture politique, avec le regard d'un chef de projet senior.
