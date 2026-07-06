@@ -79,6 +79,13 @@ Le site reprend la charte graphique de [ai-gmented.pm](https://ai-gmented.pm) : 
 
 **Formulaire de contact** : il poste vers `/contact.php` (inclus dans le repo — même handler que le site maître : CSRF HMAC sans cookie, honeypot, rate limiting, envoi SMTP local Infomaniak). Il est déployé automatiquement avec le site ; sur GitHub Pages (pas de PHP), la page bascule automatiquement sur un lien e-mail direct. Durcissement recommandé : définir la variable d'environnement `CSRF_SECRET` côté serveur (sinon un secret dérivé du chemin d'installation est utilisé).
 
+**Statistiques** : `js/analytics.js` envoie des mesures anonymes au Matomo auto-hébergé du site
+maître (`ai-gmented.pm/analytics/`) — sans cookie, sans script tiers, sans fingerprinting, Do Not
+Track respecté. Pageviews + événements `generate-zip` / `copy-skill` / `copy-megaprompt` avec
+`skillId/langue` (jamais les réponses ni le contenu généré). ⚠️ Une action manuelle : créer le site
+« forge.ai-gmented.pm » dans l'admin Matomo (Administration → Websites → Manage) et vérifier que
+son ID correspond au `SITE_ID` de `js/analytics.js` (2 par défaut).
+
 **`.htaccess`** : en-têtes de sécurité identiques au site maître (CSP `script-src 'self'` — aucun script inline n'est utilisé, le thème est initialisé par `js/theme.js` chargé dans le `<head>`), HTTPS forcé, PHP bloqué sauf `contact.php`.
 
 ## Feuille de route

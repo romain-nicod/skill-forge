@@ -318,9 +318,11 @@ function renderOutput() {
     $('#tab-prompt').hidden = btn.dataset.tab !== 'prompt';
   });
 
-  $('#btn-zip').addEventListener('click', () => downloadSkillZip(state.skillId, skill));
-  $('#btn-copy-skill').addEventListener('click', (e) => copyToClipboard(skill, e.target));
-  $('#btn-copy-prompt').addEventListener('click', (e) => copyToClipboard(prompt, e.target));
+  const skillLang = state.answers.skill_language === 'en' ? 'en' : 'fr';
+  const track = (action) => window.sfTrackEvent && window.sfTrackEvent('SkillForge', action, `${state.skillId}/${skillLang}`);
+  $('#btn-zip').addEventListener('click', () => { track('generate-zip'); downloadSkillZip(state.skillId, skill); });
+  $('#btn-copy-skill').addEventListener('click', (e) => { track('copy-skill'); copyToClipboard(skill, e.target); });
+  $('#btn-copy-prompt').addEventListener('click', (e) => { track('copy-megaprompt'); copyToClipboard(prompt, e.target); });
   $('#btn-restart').addEventListener('click', () => {
     state.outputs = null;
     state.stepIndex = 0;
