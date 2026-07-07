@@ -17,6 +17,17 @@ ServerSignature Off
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
   Header always set X-XSS-Protection "0"
+
+  # Cache : HTML toujours revalidé, assets rafraîchis sous 5 min (dev actif)
+  <FilesMatch "\.(html)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <FilesMatch "\.(css|js|json|md)$">
+    Header set Cache-Control "public, max-age=300"
+  </FilesMatch>
+  <FilesMatch "\.(svg|png|ico|jpg|webp)$">
+    Header set Cache-Control "public, max-age=86400"
+  </FilesMatch>
 </IfModule>
 
 # Force HTTPS redirect

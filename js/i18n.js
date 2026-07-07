@@ -1,6 +1,5 @@
 const STRINGS = {
   fr: {
-    'app.tagline': 'Générez votre skill Claude personnalisé',
     'home.heroTitle': 'Des skills Claude taillés pour votre contexte',
     'home.heroSubtitle':
       'Un bon skill embarque votre jargon, vos projets et vos enjeux. Conçu pour vos réunions récurrentes : répondez une fois à quelques questions, puis relancez simplement le skill à chaque réunion — vos réponses ne quittent jamais votre navigateur.',
@@ -41,6 +40,10 @@ const STRINGS = {
     'out.restart': 'Recommencer',
     'footer.note': '100 % statique : vos réponses ne quittent jamais votre navigateur.',
     'footer.service': 'Skill Forge est un service de',
+    'footer.legal': 'Mentions légales',
+    'footer.privacy': 'Confidentialité',
+    'footer.cookies': 'Cookies',
+    'footer.accessibility': 'Accessibilité',
     'nav.who': 'Qui sommes-nous',
     'nav.services': 'Services',
     'nav.expertise': 'Expertise',
@@ -74,7 +77,6 @@ const STRINGS = {
       'Retrouvez-nous sur LinkedIn pour en savoir plus sur AI-GMENTED.pm et échanger avec nous.',
   },
   en: {
-    'app.tagline': 'Generate your personalized Claude skill',
     'home.heroTitle': 'Claude skills tailored to your context',
     'home.heroSubtitle':
       'A good skill carries your jargon, your projects and your stakes. Built for your recurring meetings: answer a few questions once, then simply run the skill at every meeting — your answers never leave your browser.',
@@ -115,6 +117,10 @@ const STRINGS = {
     'out.restart': 'Start over',
     'footer.note': '100% static: your answers never leave your browser.',
     'footer.service': 'Skill Forge is a service by',
+    'footer.legal': 'Legal',
+    'footer.privacy': 'Privacy',
+    'footer.cookies': 'Cookies',
+    'footer.accessibility': 'Accessibility',
     'nav.who': 'Who we are',
     'nav.services': 'Services',
     'nav.expertise': 'Expertise',
@@ -177,6 +183,14 @@ export function t(key, ...params) {
 export function applyTranslations() {
   document.querySelectorAll('[data-i18n]').forEach((el) => {
     el.textContent = t(el.dataset.i18n);
+  });
+  // Liens croisés vers le site maître : bascule /fr/ ↔ / selon la langue de l'UI
+  const fr = getLang() === 'fr';
+  document.querySelectorAll('a[href^="https://ai-gmented.pm/"]').forEach((a) => {
+    const url = new URL(a.href);
+    const bare = url.pathname.replace(/^\/fr(\/|$)/, '/');
+    url.pathname = fr ? `/fr${bare}` : bare;
+    a.href = url.toString();
   });
 }
 

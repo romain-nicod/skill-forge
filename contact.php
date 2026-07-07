@@ -9,7 +9,7 @@
 
 // Configuration
 $recipient = 'contact@ai-gmented.pm';
-$subject_prefix = '[AI-GMENTED.pm Contact]';
+$subject_prefix = '[Skill Forge Contact]';
 $rate_limit_max = 5;
 $rate_limit_window = 3600;
 $rate_limit_dir = sys_get_temp_dir();
@@ -119,7 +119,7 @@ $email_subject = $subject_prefix . ' Enquiry from ' . $display_name;
 $email_body  = "Name: {$display_name}\n";
 $email_body .= "Email: {$email}\n\n";
 $email_body .= "Message:\n{$display_message}\n";
-$email_body .= "\n---\nSent from ai-gmented.pm contact form\n";
+$email_body .= "\n---\nSent from forge.ai-gmented.pm contact form\n";
 $email_body .= "IP: {$ip}\n";
 $email_body .= "Date: " . date('Y-m-d H:i:s T') . "\n";
 

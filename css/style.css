@@ -452,7 +452,7 @@ pre.preview {
   margin-top: 40px;
 }
 .more-skills-inner .ms-icon { font-size: 32px; color: var(--accent); line-height: 1; }
-.more-skills-inner h3 { font-size: 17px; margin-bottom: 6px; }
+.more-skills-inner h2 { font-size: 17px; margin-bottom: 6px; }
 .more-skills-inner p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 0; }
 
 /* ---------- Contact (repris de ai-gmented.pm) ---------- */
@@ -550,22 +550,9 @@ pre.preview {
 .li-icon:hover svg, .li-icon:focus svg { fill: var(--accent); }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 1024px) {
-  .container { padding-left: 40px; padding-right: 40px; }
-  .cards { grid-template-columns: repeat(2, 1fr); }
-  .site-nav { gap: 14px; }
-  .site-nav a { font-size: 11px; letter-spacing: 1.5px; }
-  .logo-subtitle { font-size: 7px; letter-spacing: 1.5px; }
-}
-
-@media (max-width: 767px) {
-  .container { padding-left: 20px; padding-right: 20px; }
-  section { padding: 56px 0; }
-  .hero { padding: 56px 0 48px; }
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.5rem; }
-
-  .logo-subtitle { white-space: normal; }
+/* Sous 1200px la nav horizontale (7 items + contrôles, ~950px requis avec le
+   padding 80px du container) ne tient plus : menu burger (aligné sur le maître) */
+@media (max-width: 1199px) {
   .nav-toggle { display: flex; align-items: center; justify-content: center; }
   .site-nav {
     display: none;
@@ -581,7 +568,23 @@ pre.preview {
     gap: 0;
   }
   .site-nav.open { display: flex; }
-  .site-nav a { padding: 12px 0; width: 100%; }
+  .site-nav a { padding: 12px 0; width: 100%; font-size: 12px; letter-spacing: 2px; }
+}
+
+@media (max-width: 1024px) {
+  .container { padding-left: 40px; padding-right: 40px; }
+  .cards { grid-template-columns: repeat(2, 1fr); }
+  .logo-subtitle { font-size: 7px; letter-spacing: 1.5px; }
+}
+
+@media (max-width: 767px) {
+  .container { padding-left: 20px; padding-right: 20px; }
+  section { padding: 56px 0; }
+  .hero { padding: 56px 0 48px; }
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+
+  .logo-subtitle { white-space: normal; }
 
   .cards { grid-template-columns: 1fr; }
   .wizard { padding: 24px 20px; margin: 40px 0 64px; }
@@ -591,3 +594,9 @@ pre.preview {
   .footer-main { flex-direction: column; gap: 16px; text-align: center; }
   .footer-nav { flex-wrap: wrap; justify-content: center; }
 }
+
+/* Contraste AA en dark : texte sombre sur l'orange éclairci (#E8853B) */
+[data-theme="dark"] .btn-primary { color: #16130F; }
+[data-theme="dark"] .btn-primary:hover:not(:disabled), [data-theme="dark"] .btn-primary:focus { color: var(--bg); }
+[data-theme="dark"] .lang-toggle button.active { color: #16130F; }
+[data-theme="dark"] .skip-nav { color: #16130F; }

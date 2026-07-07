@@ -30,5 +30,7 @@ async function renderCatalog() {
 }
 
 initLangToggle();
-renderCatalog();
+renderCatalog().catch(() => {
+  document.getElementById('catalog').innerHTML = '<p role="alert">⚠️ Catalogue indisponible — rechargez la page. / Catalog unavailable — please reload.</p>';
+});
 document.addEventListener('langchange', renderCatalog);

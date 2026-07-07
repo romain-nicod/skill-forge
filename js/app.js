@@ -45,7 +45,7 @@ function renderStep() {
   const isLast = state.stepIndex === steps.length - 1;
 
   wizard.innerHTML = `
-    <div class="progress"><div class="progress-bar" style="width:${((state.stepIndex + 1) / steps.length) * 100}%"></div></div>
+    <div class="progress"><div class="progress-bar"></div></div>
     <div class="step-count">${t('wizard.step', state.stepIndex + 1, steps.length)}</div>
     <h2></h2>
     <p class="step-intro"></p>
@@ -57,6 +57,8 @@ function renderStep() {
       <button type="button" class="btn btn-primary" id="btn-next">${isLast ? t('wizard.generate') : t('wizard.next')}</button>
     </div>
   `;
+  // Largeur posée via CSSOM : l'attribut style= inline est bloqué par la CSP (style-src 'self')
+  wizard.querySelector('.progress-bar').style.width = `${((state.stepIndex + 1) / steps.length) * 100}%`;
   wizard.querySelector('h2').textContent = step.title[lang];
   wizard.querySelector('.step-intro').textContent = (step.intro && step.intro[lang]) || '';
 

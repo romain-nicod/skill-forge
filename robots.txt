@@ -1,2 +1,3 @@
 User-agent: *
 Disallow: /generator.html
+Sitemap: https://forge.ai-gmented.pm/sitemap.xml
