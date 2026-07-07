@@ -157,14 +157,23 @@ const STRINGS = {
 
 const STORAGE_KEY = 'skillforge-lang';
 
+// Langue transmise par le site maître (?lang=fr|en) : les deux origines ont des
+// localStorage étanches, le paramètre d'URL fait voyager la préférence.
+const urlLang = new URLSearchParams(location.search).get('lang');
+if (urlLang === 'fr' || urlLang === 'en') {
+  try { localStorage.setItem(STORAGE_KEY, urlLang); } catch (e) { /* stockage indisponible */ }
+}
+
 export function getLang() {
-  const saved = localStorage.getItem(STORAGE_KEY);
+  let saved = null;
+  try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) { /* stockage bloqué */ }
   if (saved === 'fr' || saved === 'en') return saved;
+  if (urlLang === 'fr' || urlLang === 'en') return urlLang;
   return navigator.language && navigator.language.toLowerCase().startsWith('fr') ? 'fr' : 'en';
 }
 
 export function setLang(lang) {
-  localStorage.setItem(STORAGE_KEY, lang);
+  try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* stockage bloqué */ }
   document.documentElement.lang = lang;
   applyTranslations();
   document.dispatchEvent(new CustomEvent('langchange', { detail: { lang } }));
