@@ -16,7 +16,7 @@ const $ = (sel) => document.querySelector(sel);
 
 async function init() {
   initLangToggle();
-  state.skillId = new URLSearchParams(location.search).get('skill');
+  state.skillId = (new URLSearchParams(location.search).get('skill') || '').replace(/[^a-z0-9-]/gi, '');
   try {
     const res = await fetch(`skills/${state.skillId}/manifest.json`);
     if (!res.ok) throw new Error(res.status);
@@ -31,7 +31,11 @@ async function init() {
   document.addEventListener('langchange', () => {
     document.title = `${state.manifest.name[getLang()]} — Skill Forge`;
     if (state.outputs) renderOutput();
-    else renderStep();
+    else {
+      // Sauver la saisie en cours avant le re-rendu (sinon elle est perdue)
+      saveStepAnswers(state.manifest.steps[state.stepIndex]);
+      renderStep();
+    }
   });
 }
 
@@ -71,17 +75,37 @@ function renderStep() {
     renderStep();
     scrollTo(0, 0);
   });
-  $('#btn-next').addEventListener('click', async () => {
+  $('#btn-next').addEventListener('click', async (e) => {
+    // Double-clic : le 2e clic frappe le bouton re-rendu de l'étape suivante et
+    // la franchirait en silence si ses champs ont des valeurs par défaut
+    if (state.busy || Date.now() - (state.lastAdvance || 0) < 400) return;
+    state.lastAdvance = Date.now();
     saveStepAnswers(step);
     if (!validateStep(step)) return;
-    if (isLast) {
-      await generate();
-    } else {
-      state.stepIndex++;
-      renderStep();
-      scrollTo(0, 0);
+    state.busy = true;
+    try {
+      if (isLast) {
+        e.target.disabled = true;
+        await generate();
+      } else {
+        state.stepIndex++;
+        renderStep();
+        scrollTo(0, 0);
+      }
+    } catch {
+      e.target.disabled = false;
+      const status = document.createElement('p');
+      status.setAttribute('role', 'alert');
+      status.className = 'field-error';
+      status.textContent = t('wizard.generateError');
+      e.target.parentElement.appendChild(status);
+    } finally {
+      state.busy = false;
     }
   });
+
+  // Entrée dans un champ = Suivant (accessibilité clavier, évite le submit implicite)
+  form.addEventListener('submit', (ev) => { ev.preventDefault(); $('#btn-next').click(); });
 }
 
 function buildField(q, lang) {
