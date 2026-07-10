@@ -103,6 +103,12 @@ if (!empty($_POST['website'])) {
 
 // Rate limiting — file-based, no session
 $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+// GC probabiliste : purge les compteurs d'IP obsolètes (anti-remplissage du temp)
+if (mt_rand(1, 50) === 1) {
+    foreach (glob($rate_limit_dir . '/aigmented_rate_*') ?: [] as $f) {
+        if (@filemtime($f) < time() - $rate_limit_window) @unlink($f);
+    }
+}
 $rate_file = $rate_limit_dir . '/aigmented_rate_' . hash('sha256', $ip);
 $submissions = [];
 if (file_exists($rate_file)) {
@@ -117,9 +123,10 @@ if (count($submissions) >= $rate_limit_max) {
 }
 
 // Validate & sanitise inputs
-$name = trim($_POST['name'] ?? '');
-$email = trim($_POST['email'] ?? '');
-$message = str_replace("\0", '', trim($_POST['message'] ?? ''));
+// Bornes de longueur (anti-DoS : Subject/corps non bornés sinon) + purge NUL/CR nu
+$name = mb_substr(str_replace(["\r", "\n", "\0"], '', trim($_POST['name'] ?? '')), 0, 200);
+$email = mb_substr(trim($_POST['email'] ?? ''), 0, 254);
+$message = mb_substr(str_replace(["\0", "\r"], '', trim($_POST['message'] ?? '')), 0, 5000);
 $consent = isset($_POST['consent']);
 
 // Only email + consent are required
@@ -131,9 +138,8 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     respond('error', 'Please provide a valid email address.', 400, 'invalid-email');
 }
 
-// Header injection protection
+// Header injection protection (le name est déjà purgé de CR/LF/NUL ci-dessus)
 $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-$name = str_replace(["\r", "\n", "\0"], '', $name);
 
 // Build email
 $display_name = $name ?: '(not provided)';
@@ -151,6 +157,7 @@ $email_body .= "Date: " . date('Y-m-d H:i:s T') . "\n";
 $sent = false;
 $smtp = @fsockopen('localhost', 25, $errno, $errstr, 10);
 if ($smtp) {
+    stream_set_timeout($smtp, 10); // évite un worker bloqué si le relais stalle
     $from_addr = 'noreply@ai-gmented.pm';
     $smtpRead = function() use ($smtp) {
         $data = '';
@@ -179,7 +186,9 @@ if ($smtp) {
     $msg .= "Content-Type: text/plain; charset=UTF-8\r\n";
     $msg .= "X-Mailer: AI-GMENTED Contact Form\r\n";
     $msg .= "\r\n";
-    $msg .= str_replace("\n.", "\n..", $email_body);
+    // Normalisation CRLF puis dot-stuffing RFC 5321 (ferme le résidu de smuggling par CR nu)
+    $body_crlf = preg_replace('/\r\n|\r|\n/', "\r\n", $email_body);
+    $msg .= str_replace("\r\n.", "\r\n..", $body_crlf);
     $msg .= "\r\n.\r\n";
     fwrite($smtp, $msg);
 
