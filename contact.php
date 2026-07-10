@@ -17,19 +17,43 @@ $csrf_ttl = 3600;
 
 // CSRF secret — CHANGE THIS on deployment.
 // On Infomaniak: set CSRF_SECRET in .user.ini or environment variable.
-$csrf_secret = getenv('CSRF_SECRET') ?: 'CHANGE-ME-ON-DEPLOY-' . __DIR__;
+$csrf_secret = getenv('CSRF_SECRET');
+if (!$csrf_secret) {
+    // Secret persistant auto-généré (0600) — remplace le repli prévisible basé sur __DIR__
+    $secret_file = sys_get_temp_dir() . '/aigmented_csrf_secret';
+    $csrf_secret = @file_get_contents($secret_file) ?: '';
+    if (strlen($csrf_secret) < 32) {
+        $csrf_secret = bin2hex(random_bytes(32));
+        @file_put_contents($secret_file, $csrf_secret, LOCK_EX);
+        @chmod($secret_file, 0600);
+    }
+}
 
 // Detect JSON request
 $wants_json = (strpos($_SERVER['HTTP_ACCEPT'] ?? '', 'application/json') !== false);
 
-function respond($status, $message, $http_code, $redirect_status) {
+function respond($status, $message, $http_code, $code) {
     global $wants_json;
     if ($wants_json) {
         http_response_code($http_code);
         header('Content-Type: application/json');
-        echo json_encode(['status' => $status, 'message' => $message]);
+        echo json_encode(['status' => $status, 'code' => $code, 'message' => $message]);
     } else {
-        header('Location: /?status=' . $redirect_status);
+        // Fallback sans JavaScript : page de confirmation (plus de redirection muette)
+        $ok = ($status === 'success');
+        $title = $ok ? 'Message sent' : 'Something went wrong';
+        $body = $ok ? 'Thank you! We will get back to you shortly.'
+                    : ('Your message could not be sent. ' . $message);
+        http_response_code($ok ? 200 : $http_code);
+        header('Content-Type: text/html; charset=UTF-8');
+        echo '<!doctype html><html lang="en"><head><meta charset="utf-8">'
+           . '<meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">'
+           . '<title>' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '</title>'
+           . '<link rel="stylesheet" href="/css/style.css?v=3"></head><body><main id="main"><section><div class="container">'
+           . '<h1>' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '</h1>'
+           . '<p class="section-text">' . htmlspecialchars($body, ENT_QUOTES, 'UTF-8') . '</p>'
+           . '<a class="cta-link" href="/#contact">Back to Skill Forge <span class="arrow">&rarr;</span></a>'
+           . '</div></section></main></body></html>';
     }
     exit;
 }
@@ -69,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // CSRF validation
 $submitted_token = $_POST['csrf_token'] ?? '';
 if (!csrf_verify($submitted_token, $csrf_secret, $csrf_ttl)) {
-    respond('error', 'Form expired. Please refresh and try again.', 403, 'error');
+    respond('error', 'Form expired. Please refresh and try again.', 403, 'expired');
 }
 
 // Honeypot — silently reject bots
@@ -93,9 +117,9 @@ if (count($submissions) >= $rate_limit_max) {
 }
 
 // Validate & sanitise inputs
-$name = htmlspecialchars(trim($_POST['name'] ?? ''), ENT_QUOTES, 'UTF-8');
+$name = trim($_POST['name'] ?? '');
 $email = trim($_POST['email'] ?? '');
-$message = htmlspecialchars(trim($_POST['message'] ?? ''), ENT_QUOTES, 'UTF-8');
+$message = str_replace("\0", '', trim($_POST['message'] ?? ''));
 $consent = isset($_POST['consent']);
 
 // Only email + consent are required
@@ -151,7 +175,7 @@ if ($smtp) {
     $msg  = "From: {$from_addr}\r\n";
     $msg .= "Reply-To: {$email}\r\n";
     $msg .= "To: {$recipient}\r\n";
-    $msg .= "Subject: {$email_subject}\r\n";
+    $msg .= "Subject: =?UTF-8?B?" . base64_encode($email_subject) . "?=\r\n";
     $msg .= "Content-Type: text/plain; charset=UTF-8\r\n";
     $msg .= "X-Mailer: AI-GMENTED Contact Form\r\n";
     $msg .= "\r\n";
@@ -167,7 +191,7 @@ if ($smtp) {
 
 // Record submission for rate limiting
 $submissions[] = time();
-file_put_contents($rate_file, json_encode(array_values($submissions)));
+file_put_contents($rate_file, json_encode(array_values($submissions)), LOCK_EX);
 
 // Generic response — never expose technical details
 if ($sent) {

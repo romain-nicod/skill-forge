@@ -49,8 +49,13 @@ import { t } from './i18n.js';
             .then(function (r) { return r.json(); })
             .then(function (d2) { document.getElementById('csrf_token').value = d2.token; });
         } else {
-          status.textContent = d.message || t('contact.error');
+          // Libellé localisé selon le code (d.message est en anglais)
+          status.textContent = ({ expired: t('contact.errExpired'), 'rate-limited': t('contact.errTooMany') })[d.code] || t('contact.error');
           status.className = 'form-status error';
+          fetch('/contact.php?csrf')
+            .then(function (r) { return r.json(); })
+            .then(function (d2) { document.getElementById('csrf_token').value = d2.token; })
+            .catch(function () {});
         }
       })
       .catch(function () {

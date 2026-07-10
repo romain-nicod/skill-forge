@@ -70,6 +70,8 @@ const STRINGS = {
     'contact.send': 'Envoyer',
     'contact.sending': 'Envoi…',
     'contact.sent': 'Message envoyé. Nous revenons vers vous rapidement.',
+    'contact.errExpired': 'Le formulaire a expiré — merci de réessayer.',
+    'contact.errTooMany': 'Trop de messages — merci de réessayer plus tard.',
     'contact.error': 'Une erreur est survenue. Réessayez ou écrivez-nous directement.',
     'contact.fallback':
       'Le formulaire n’est pas encore actif sur ce sous-domaine — écrivez-nous directement :',
@@ -148,6 +150,8 @@ const STRINGS = {
     'contact.send': 'Send message',
     'contact.sending': 'Sending…',
     'contact.sent': 'Message sent. We will get back to you shortly.',
+    'contact.errExpired': 'The form expired — please try again.',
+    'contact.errTooMany': 'Too many messages — please try again later.',
     'contact.error': 'Something went wrong. Please try again or email us directly.',
     'contact.fallback':
       'The form is not active on this subdomain yet — email us directly:',
@@ -201,6 +205,7 @@ export function applyTranslations() {
     const url = new URL(a.href);
     const bare = url.pathname.replace(/^\/fr(\/|$)/, '/');
     url.pathname = fr ? `/fr${bare}` : bare;
+    url.searchParams.set('lang', fr ? 'fr' : 'en'); // localStorage étanche entre origines
     a.href = url.toString();
   });
 }
