@@ -161,29 +161,38 @@ const STRINGS = {
   },
 };
 
-const STORAGE_KEY = 'skillforge-lang';
+// ------------------------------------------------------------------
+// i18n par URL : la langue de la page est portée par l'URL, jamais par
+// localStorage. FR vit à la racine "/", EN sous "/en/". Chaque page HTML
+// déclare sa langue via <html lang="…"> et son préfixe de chemin vers la
+// racine du site via data-root ("./" côté FR, "../" côté EN) — les fetch
+// JS (catalogue, manifests, templates) passent par ce préfixe.
+// ------------------------------------------------------------------
 
-// Langue transmise par le site maître (?lang=fr|en) : les deux origines ont des
-// localStorage étanches, le paramètre d'URL fait voyager la préférence.
-const urlLang = new URLSearchParams(location.search).get('lang');
-if (urlLang === 'fr' || urlLang === 'en') {
-  try { localStorage.setItem(STORAGE_KEY, urlLang); } catch (e) { /* stockage indisponible */ }
-}
+/** Préfixe relatif vers la racine du site ("./" en FR, "../" en EN). */
+export const ROOT = document.documentElement.getAttribute('data-root') || './';
 
+/** Langue de la page courante — l'URL (via <html lang>) est la source de vérité. */
 export function getLang() {
-  let saved = null;
-  try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) { /* stockage bloqué */ }
-  if (saved === 'fr' || saved === 'en') return saved;
-  if (urlLang === 'fr' || urlLang === 'en') return urlLang;
-  return navigator.language && navigator.language.toLowerCase().startsWith('fr') ? 'fr' : 'en';
+  return (document.documentElement.lang || 'fr').toLowerCase().startsWith('en') ? 'en' : 'fr';
 }
 
-export function setLang(lang) {
-  try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* stockage bloqué */ }
-  document.documentElement.lang = lang;
-  applyTranslations();
-  document.dispatchEvent(new CustomEvent('langchange', { detail: { lang } }));
-}
+// Compat site maître : ai-gmented.pm transmet ?lang=fr|en (localStorage
+// étanche entre origines). Si la langue demandée n'est pas celle de la
+// page, on redirige vers l'URL miroir en préservant les autres paramètres
+// (?skill=…, ?theme=…) et l'ancre. Amélioration progressive uniquement :
+// sans JavaScript, les liens <a> du sélecteur FR/EN restent fonctionnels.
+(function redirectToRequestedLang() {
+  const params = new URLSearchParams(location.search);
+  const asked = params.get('lang');
+  if (asked !== 'fr' && asked !== 'en') return;
+  if (asked === getLang()) return;
+  params.delete('lang');
+  const qs = params.toString() ? `?${params.toString()}` : '';
+  const file = location.pathname.split('/').pop() || '';
+  const target = asked === 'en' ? `en/${file}` : `../${file}`;
+  location.replace(target + qs + location.hash);
+})();
 
 export function t(key, ...params) {
   const lang = getLang();
@@ -194,38 +203,34 @@ export function t(key, ...params) {
   return str;
 }
 
-/** Translate every element carrying a data-i18n attribute. */
+/** Translate every element carrying a data-i18n attribute (progressive enhancement). */
 export function applyTranslations() {
   document.querySelectorAll('[data-i18n]').forEach((el) => {
     el.textContent = t(el.dataset.i18n);
   });
-  // Liens croisés vers le site maître : bascule /fr/ ↔ / selon la langue de l'UI
-  const fr = getLang() === 'fr';
-  document.querySelectorAll('a[href^="https://ai-gmented.pm/"]').forEach((a) => {
-    const url = new URL(a.href);
-    const bare = url.pathname.replace(/^\/fr(\/|$)/, '/');
-    url.pathname = fr ? `/fr${bare}` : bare;
-    url.searchParams.set('lang', fr ? 'fr' : 'en'); // localStorage étanche entre origines
-    a.href = url.toString();
-  });
 }
 
-/** Wire the FR/EN pill in the header. */
+/**
+ * Sélecteur FR/EN : de vrais liens <a> vers l'URL miroir (fonctionnels sans
+ * JavaScript). Le JS n'ajoute que deux améliorations : l'état actif, et la
+ * conservation des paramètres de la page courante (ex. ?skill=… sur le
+ * générateur) dans le lien vers l'autre langue.
+ */
 export function initLangToggle() {
-  document.documentElement.lang = getLang();
   const toggle = document.querySelector('.lang-toggle');
   if (!toggle) return;
-  const refresh = () => {
-    toggle.querySelectorAll('button').forEach((btn) => {
-      btn.classList.toggle('active', btn.dataset.lang === getLang());
-    });
-  };
-  toggle.addEventListener('click', (e) => {
-    const btn = e.target.closest('button[data-lang]');
-    if (!btn) return;
-    setLang(btn.dataset.lang);
-    refresh();
+  const lang = getLang();
+  toggle.querySelectorAll('a[data-lang]').forEach((a) => {
+    const isCurrent = a.dataset.lang === lang;
+    a.classList.toggle('active', isCurrent);
+    if (isCurrent) a.setAttribute('aria-current', 'true');
+    if (!isCurrent && location.search) {
+      const url = new URL(a.getAttribute('href'), location.href);
+      const params = new URLSearchParams(location.search);
+      params.delete('lang');
+      const qs = params.toString();
+      if (qs) a.href = `${url.pathname}?${qs}${url.hash || ''}`;
+    }
   });
-  refresh();
   applyTranslations();
 }
