@@ -1,9 +1,9 @@
-import { getLang, t, initLangToggle } from './i18n.js';
+import { getLang, t, initLangToggle, ROOT } from './i18n.js';
 
 async function renderCatalog() {
   const grid = document.getElementById('catalog');
   const lang = getLang();
-  const res = await fetch('skills/catalog.json');
+  const res = await fetch(`${ROOT}skills/catalog.json`);
   const catalog = await res.json();
 
   grid.innerHTML = '';
@@ -33,4 +33,3 @@ initLangToggle();
 renderCatalog().catch(() => {
   document.getElementById('catalog').innerHTML = '<p role="alert">⚠️ Catalogue indisponible — rechargez la page. / Catalog unavailable — please reload.</p>';
 });
-document.addEventListener('langchange', renderCatalog);

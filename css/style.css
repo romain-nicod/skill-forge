@@ -199,7 +199,8 @@ section { padding: 80px 0; border-bottom: 1px solid var(--border); }
   border: 1px solid var(--border);
   overflow: hidden;
 }
-.lang-toggle button {
+.lang-toggle button,
+.lang-toggle a {
   border: none;
   background: transparent;
   color: var(--muted);
@@ -209,9 +210,15 @@ section { padding: 80px 0; border-bottom: 1px solid var(--border); }
   letter-spacing: 1px;
   cursor: pointer;
   font-family: inherit;
+  text-decoration: none;
+  line-height: 1.4;
+  display: inline-block;
   transition: background var(--transition), color var(--transition);
 }
-.lang-toggle button.active { background: var(--accent); color: #fff; }
+.lang-toggle a:hover, .lang-toggle a:focus { color: var(--accent); text-decoration: none; }
+.lang-toggle button.active,
+.lang-toggle a.active { background: var(--accent); color: #fff; }
+.lang-toggle a.active:hover, .lang-toggle a.active:focus { color: #fff; }
 
 /* Theme toggle (lune / soleil) */
 .theme-toggle {

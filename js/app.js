@@ -1,4 +1,4 @@
-import { getLang, t, initLangToggle, applyTranslations } from './i18n.js';
+import { getLang, t, initLangToggle, applyTranslations, ROOT } from './i18n.js';
 import { render } from './template-engine.js';
 import { copyToClipboard, downloadSkillZip } from './output.js';
 
@@ -18,7 +18,7 @@ async function init() {
   initLangToggle();
   state.skillId = (new URLSearchParams(location.search).get('skill') || '').replace(/[^a-z0-9-]/gi, '');
   try {
-    const res = await fetch(`skills/${state.skillId}/manifest.json`);
+    const res = await fetch(`${ROOT}skills/${state.skillId}/manifest.json`);
     if (!res.ok) throw new Error(res.status);
     state.manifest = await res.json();
   } catch {
@@ -28,15 +28,6 @@ async function init() {
   }
   document.title = `${state.manifest.name[getLang()]} — Skill Forge`;
   renderStep();
-  document.addEventListener('langchange', () => {
-    document.title = `${state.manifest.name[getLang()]} — Skill Forge`;
-    if (state.outputs) renderOutput();
-    else {
-      // Sauver la saisie en cours avant le re-rendu (sinon elle est perdue)
-      saveStepAnswers(state.manifest.steps[state.stepIndex]);
-      renderStep();
-    }
-  });
 }
 
 // ---------------------------------------------------------------- wizard
@@ -260,7 +251,7 @@ function buildAnswersSummary(skillLang) {
 
 async function generate() {
   const skillLang = state.answers.skill_language === 'en' ? 'en' : 'fr';
-  const base = `skills/${state.skillId}`;
+  const base = `${ROOT}skills/${state.skillId}`;
   const [templateRes, promptRes] = await Promise.all([
     fetch(`${base}/template.${skillLang}.md`),
     fetch(`${base}/meta-prompt.${skillLang}.md`),
