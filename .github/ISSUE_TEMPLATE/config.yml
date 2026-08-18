@@ -1,0 +1,12 @@
+# Blank issues stay enabled: an idea caught in passing must not be
+# blocked by a form.
+blank_issues_enabled: true
+
+contact_links:
+  - name: Skill Forge, live
+    url: https://forge.ai-gmented.pm
+    about: Check the behaviour on the deployed site before opening an issue.
+
+  - name: Kanban board
+    url: https://github.com/users/ai-gmented-pm/projects/4
+    about: Where the issues live once opened.
