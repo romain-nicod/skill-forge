@@ -1,0 +1,26 @@
+Skill Forge
+Copyright (c) 2026 Romain Nicod / AI-GMENTED (ai-gmented.pm)
+
+WHAT CHANGED, AND WHY
+---------------------
+This repository was previously dual-licensed: MIT for the code, all rights
+reserved for the `skills/` directory. It is now MIT throughout, including the
+skill templates, their meta-prompts and their manifests.
+
+The reason is simple: the code was already MIT, so the service was already
+free to clone. Holding three templates back protected nothing real, while it
+did slow down the circulation that makes the work useful.
+
+SKILLS YOU GENERATE
+-------------------
+Skills generated through the Skill Forge interface (hosted at
+forge.ai-gmented.pm or run locally) belong to the person who generated them.
+Use, modify and share them freely, for any purpose, commercial use included.
+Attribution is appreciated and never required.
+
+TRADEMARKS
+----------
+A software licence covers copyright, not trademarks. "AI-GMENTED",
+"AI-GMENTED.pm" and the Skill Forge branding remain the property of their
+owner and may not be used to endorse or promote derived products without
+written permission (contact@ai-gmented.pm).
