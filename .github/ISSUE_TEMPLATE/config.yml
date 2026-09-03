@@ -7,6 +7,3 @@ contact_links:
     url: https://forge.ai-gmented.pm
     about: Check the behaviour on the deployed site before opening an issue.
 
-  - name: Kanban board
-    url: https://github.com/users/ai-gmented-pm/projects/4
-    about: Where the issues live once opened.
