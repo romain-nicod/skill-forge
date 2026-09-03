@@ -1,0 +1,101 @@
+# ⚒️ Skill Forge
+
+*[English version](README.md)*
+
+**Un service de [AI-GMENTED.pm](https://ai-gmented.pm)**, hébergé sur [forge.ai-gmented.pm](https://forge.ai-gmented.pm).
+
+**Licence** : [CC BY 4.0](LICENSE) pour l'ensemble du dépôt, templates de skills
+compris. Réutilisez, adaptez, vendez ce que vous en tirez, et gardez le crédit
+visible. Les skills que **vous** générez vous appartiennent, usage commercial
+inclus, sans attribution requise. La marque AI-GMENTED reste réservée, ce qu'une
+licence de droit d'auteur ne couvre pas : voir [NOTICE](NOTICE).
+
+Générateur de skills Claude personnalisés. Un bon skill embarque le contexte de son utilisateur — jargon, projets, acteurs, enjeux. Skill Forge interviewe l'utilisateur via un questionnaire, puis génère un skill prêt à installer, **sans backend ni clé API** : tout se passe dans le navigateur.
+
+**v1 : Comptes-rendus de réunion** — à partir d'un transcript (Teams/Copilot, Meet, Zoom…), le skill généré produit décisions, actions, risques, hypothèses, points ouverts, angles morts et lecture politique, avec le regard d'un chef de projet senior.
+
+## Deux modes de génération
+
+1. **Skill prêt à l'emploi** — les réponses au questionnaire sont injectées dans un template de skill éprouvé. Résultat : un `SKILL.md` téléchargeable en `.zip`, installable tel quel sur claude.ai ou dans Claude Code.
+2. **Sur mesure via votre Claude** — la page assemble un méga-prompt (skill de base + vos réponses) à coller dans claude.ai : Claude vous pose 3-5 questions complémentaires puis rédige un skill vraiment sur mesure.
+
+L'interface est bilingue FR/EN, et le skill peut être généré dans l'une ou l'autre langue.
+
+## Lancer en local
+
+Site 100 % statique (vanilla HTML/CSS/JS, zéro dépendance) :
+
+```bash
+python3 -m http.server 8000
+# puis ouvrir http://localhost:8000
+```
+
+## Déployer sur GitHub Pages
+
+Le workflow `.github/workflows/pages.yml` publie le site à chaque push sur `main`.
+Une seule action manuelle est nécessaire : dans **Settings → Pages** du repo, choisir **Source : GitHub Actions**.
+
+## Déployer sur Infomaniak (ou tout hébergement FTP)
+
+Le workflow `.github/workflows/deploy-infomaniak.yml` pousse le site par FTPS à chaque push sur `main`, dès que trois secrets sont configurés dans **Settings → Secrets and variables → Actions** :
+
+| Secret | Valeur |
+|--------|--------|
+| `INFOMANIAK_FTP_HOST` | hôte FTP (ex. `xxxxx.ftp.infomaniak.com`, visible dans Manager → Hébergement Web → FTP/SSH) |
+| `INFOMANIAK_FTP_USER` | utilisateur FTP |
+| `INFOMANIAK_FTP_PASSWORD` | mot de passe FTP |
+
+Il faut aussi définir la **variable** `INFOMANIAK_SERVER_DIR` (onglet *Variables*) : le dossier cible, ex. `/` pour un compte FTP restreint au dossier du site, ou `/sites/forge.example.com/`. **Il n'y a volontairement aucun dossier par défaut** : tant que les secrets et la variable ne sont pas définis, le job est ignoré — impossible d'écraser un site existant par accident. Recommandation : créez un compte FTP dédié, restreint au dossier du sous-domaine. Le site étant 100 % statique, un simple glisser-déposer des fichiers dans le Web FTP du Manager fonctionne aussi.
+
+## Installer un skill généré
+
+- **claude.ai** : Paramètres → Capacités → Skills → téléverser le `.zip`.
+- **Claude Code** : enregistrer le contenu sous `~/.claude/skills/meeting-minutes/SKILL.md`.
+
+## Architecture
+
+```
+index.html                       Catalogue des skills + CTA LinkedIn + contact
+generator.html?skill=<id>        Wizard de personnalisation (générique)
+css/style.css                    Charte graphique AI-GMENTED.pm, light/dark
+js/
+  app.js                         Moteur du wizard (piloté par le manifest)
+  template-engine.js             Mini-moteur {{var}} / {{#if}} / {{#each}}
+  i18n.js                        Bascule FR/EN
+  theme.js                       Bascule light/dark (lune/soleil) + menu mobile
+  contact.js                     Formulaire de contact (CSRF + AJAX, fallback mailto)
+  output.js                      Copie + téléchargement .zip
+  zip.js                         Écriture ZIP minimale (aucune dépendance)
+  home.js                        Rendu du catalogue
+skills/
+  catalog.json                   Liste des skills du catalogue
+  meeting-minutes/
+    manifest.json                Questionnaire (étapes, questions, variables)
+    template.fr.md / .en.md      Skill de base avec placeholders
+    meta-prompt.fr.md / .en.md   Template du méga-prompt (mode hybride)
+```
+
+**Ajouter un skill au catalogue** = créer un dossier `skills/<id>/` (manifest + templates) et ajouter une entrée dans `skills/catalog.json`. Aucun changement de code : le wizard est entièrement piloté par le manifest.
+
+## Design & intégration AI-GMENTED.pm
+
+Le site reprend la charte graphique de [ai-gmented.pm](https://ai-gmented.pm) : accent orange `#C2661A`, system fonts, menu de navigation et footer du site maître. Le thème sombre (bouton lune/soleil, préférence mémorisée en localStorage) conserve l'accent orange pour les liens (`#E8853B`, éclairci pour le contraste AA).
+
+**Formulaire de contact** : il poste vers `/contact.php` (inclus dans le repo — même handler que le site maître : CSRF HMAC sans cookie, honeypot, rate limiting, envoi SMTP local Infomaniak). Il est déployé automatiquement avec le site ; sur GitHub Pages (pas de PHP), la page bascule automatiquement sur un lien e-mail direct. Durcissement recommandé : définir la variable d'environnement `CSRF_SECRET` côté serveur (sinon un secret dérivé du chemin d'installation est utilisé).
+
+**Statistiques** : `js/analytics.js` envoie des mesures anonymes au Matomo auto-hébergé du site
+maître (`ai-gmented.pm/analytics/`) — sans cookie, sans script tiers, sans fingerprinting, Do Not
+Track respecté. Pageviews + événements `generate-zip` / `copy-skill` / `copy-megaprompt` avec
+`skillId/langue` (jamais les réponses ni le contenu généré). ⚠️ Une action manuelle : créer le site
+« forge.ai-gmented.pm » dans l'admin Matomo (Administration → Websites → Manage) et vérifier que
+son ID correspond au `SITE_ID` de `js/analytics.js` (2 par défaut).
+
+**`.htaccess`** : en-têtes de sécurité identiques au site maître (CSP `script-src 'self'` — aucun script inline n'est utilisé, le thème est initialisé par `js/theme.js` chargé dans le `<head>`), HTTPS forcé, PHP bloqué sauf `contact.php`.
+
+## Feuille de route
+
+- [x] Fusionner le skill `meeting-minutes` original de l'auteur dans les templates (v3.7 — méthodologie généralisée : test d'autorité des décisions, grille risque/hypothèse/dépendance, test d'admission backlog, passe de consolidation par sujet, filtre de contenu sensible, vérification post-production, briefing privé avec angles morts et auto-analyse)
+- [x] Coach de réunion (briefing privé jamais diffusé : angles morts, lecture politique, auto-analyse, dynamique de parole, décisions qui traînent, rituels)
+- [x] Extraction de backlog (user stories depuis transcripts — méthodologie fusionnée : familles de signaux, règle du besoin-sans-solution, déduplication, test INVEST)
+- [ ] Débrief candidat (fiches d'évaluation comparables)
+- [ ] Partage d'une configuration via lien

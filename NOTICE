@@ -1,26 +1,33 @@
 Skill Forge
-Copyright (c) 2026 Romain Nicod / AI-GMENTED (ai-gmented.pm)
+Copyright (c) 2026 Romain Nicod
 
-WHAT CHANGED, AND WHY
----------------------
-This repository was previously dual-licensed: MIT for the code, all rights
-reserved for the `skills/` directory. It is now MIT throughout, including the
-skill templates, their meta-prompts and their manifests.
+This work is licensed under the Creative Commons Attribution 4.0
+International License. The full text is in LICENSE, and a summary is at
+https://creativecommons.org/licenses/by/4.0/
 
-The reason is simple: the code was already MIT, so the service was already
-free to clone. Holding three templates back protected nothing real, while it
-did slow down the circulation that makes the work useful.
+You are free to share and adapt this material, including commercially,
+provided you give credit. Credit is satisfied by keeping a line such as:
+
+  Based on Skill Forge by Romain Nicod
+  (https://github.com/romain-nicod/skill-forge), licensed under CC BY 4.0.
+
+Keep it where a reader will see it: in the README of the work that reuses
+this one, or in the file itself. A credit buried in a commit message does
+not satisfy the licence.
+
+If you modify this work, say so, so that nobody attributes your changes to
+the original.
 
 SKILLS YOU GENERATE
 -------------------
-Skills generated through the Skill Forge interface (hosted at
-forge.ai-gmented.pm or run locally) belong to the person who generated them.
+Skills generated through the Skill Forge interface, hosted at
+forge.ai-gmented.pm or run locally, belong to the person who generated them.
 Use, modify and share them freely, for any purpose, commercial use included.
-Attribution is appreciated and never required.
+Attribution is appreciated and never required for those.
 
 TRADEMARKS
 ----------
-A software licence covers copyright, not trademarks. "AI-GMENTED",
+A copyright licence covers copyright, not trademarks. "AI-GMENTED",
 "AI-GMENTED.pm" and the Skill Forge branding remain the property of their
 owner and may not be used to endorse or promote derived products without
 written permission (contact@ai-gmented.pm).
