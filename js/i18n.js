@@ -223,10 +223,11 @@ export function initLangToggle() {
       const isCurrent = a.dataset.lang === lang;
       if (isCurrent) a.setAttribute('aria-current', 'true');
       else a.removeAttribute('aria-current');
-      if (!isCurrent && location.search) {
+      if (location.search) {
         const url = new URL(a.getAttribute('href'), location.href);
         const params = new URLSearchParams(location.search);
         params.delete('lang');
+        params.delete('theme');
         const qs = params.toString();
         if (qs) a.href = `${url.pathname}?${qs}${url.hash || ''}`;
       }
