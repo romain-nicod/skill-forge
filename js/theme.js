@@ -1,10 +1,13 @@
-/* Bascule light/dark — chargé en tête de page (bloquant, sans defer) pour
-   poser data-theme avant le premier rendu sans script inline (CSP: script-src 'self').
-   Gère aussi le menu mobile (même comportement que ai-gmented.pm). */
+/* Light/dark switch — loaded in the head (blocking, no defer) to set
+   data-theme before the first paint without an inline script (CSP: script-src 'self').
+   Reads ?theme= sent by the main site, then the local storage, then the system
+   preference. The theme button is hidden in the markup and revealed here, so
+   that without a script there is no dead control.
+   The mobile menu is a native <details>: it needs no script. */
 (function () {
   var KEY = 'skillforge-theme';
 
-  // ?theme= transmis par le site maître (localStorage étanche entre origines)
+  // ?theme= handed over by the main site (local storage is sealed between origins)
   var urlTheme = new URLSearchParams(location.search).get('theme');
   var saved;
   try { saved = localStorage.getItem(KEY); } catch (e) { saved = null; }
@@ -30,7 +33,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    // Liens vers le site maître : embarquer le thème courant au moment du clic
+    // Links to the main site: carry the current theme at click time
     document.querySelectorAll('a[href^="https://ai-gmented.pm"]').forEach(function (a) {
       a.addEventListener('click', function () {
         var url = new URL(a.href);
@@ -39,7 +42,7 @@
       });
     });
 
-    // Nettoyage de l'adresse : ?theme=/?lang= lus et mémorisés
+    // Clean the address bar: ?theme= and ?lang= are read and remembered
     if (window.history && history.replaceState && /[?&](theme|lang)=/.test(location.search)) {
       var clean = new URL(location.href);
       clean.searchParams.delete('theme');
@@ -48,25 +51,11 @@
     }
 
     document.querySelectorAll('.theme-toggle').forEach(function (btn) {
+      btn.hidden = false;
       btn.setAttribute('aria-pressed', current() === 'dark');
       btn.addEventListener('click', function () {
         apply(current() === 'dark' ? 'light' : 'dark');
       });
     });
-
-    var t = document.getElementById('nav-toggle');
-    var n = document.getElementById('site-nav');
-    if (t && n) {
-      t.addEventListener('click', function () {
-        var o = n.classList.toggle('open');
-        t.setAttribute('aria-expanded', o);
-      });
-      n.querySelectorAll('a').forEach(function (a) {
-        a.addEventListener('click', function () {
-          n.classList.remove('open');
-          t.setAttribute('aria-expanded', 'false');
-        });
-      });
-    }
   });
 })();

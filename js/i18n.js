@@ -212,25 +212,25 @@ export function applyTranslations() {
 
 /**
  * Sélecteur FR/EN : de vrais liens <a> vers l'URL miroir (fonctionnels sans
- * JavaScript). Le JS n'ajoute que deux améliorations : l'état actif, et la
+ * JavaScript). Le JS n'ajoute que deux améliorations : l'état courant (aria-current), et la
  * conservation des paramètres de la page courante (ex. ?skill=… sur le
  * générateur) dans le lien vers l'autre langue.
  */
 export function initLangToggle() {
-  const toggle = document.querySelector('.lang-toggle');
-  if (!toggle) return;
   const lang = getLang();
-  toggle.querySelectorAll('a[data-lang]').forEach((a) => {
-    const isCurrent = a.dataset.lang === lang;
-    a.classList.toggle('active', isCurrent);
-    if (isCurrent) a.setAttribute('aria-current', 'true');
-    if (!isCurrent && location.search) {
-      const url = new URL(a.getAttribute('href'), location.href);
-      const params = new URLSearchParams(location.search);
-      params.delete('lang');
-      const qs = params.toString();
-      if (qs) a.href = `${url.pathname}?${qs}${url.hash || ''}`;
-    }
+  document.querySelectorAll('.lang-toggle').forEach((toggle) => {
+    toggle.querySelectorAll('a[data-lang]').forEach((a) => {
+      const isCurrent = a.dataset.lang === lang;
+      if (isCurrent) a.setAttribute('aria-current', 'true');
+      else a.removeAttribute('aria-current');
+      if (!isCurrent && location.search) {
+        const url = new URL(a.getAttribute('href'), location.href);
+        const params = new URLSearchParams(location.search);
+        params.delete('lang');
+        const qs = params.toString();
+        if (qs) a.href = `${url.pathname}?${qs}${url.hash || ''}`;
+      }
+    });
   });
   applyTranslations();
 }
