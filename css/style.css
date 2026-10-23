@@ -343,6 +343,7 @@ code { font-size: 0.875em; }
   .footer-nav, .footer-nav nav { flex-direction: column; align-items: flex-start; gap: 0; }
 }
 
+
 /* ---------- 7. Pages: sections, hero ---------- */
 .sec { padding: 3rem 0; border-top: 1px solid var(--rule-faint); }
 .label {
@@ -523,132 +524,131 @@ code { font-size: 0.875em; }
   .contact-aside { padding: 1.5rem 0 0; border-left: 0; border-top: 1px solid var(--rule-faint); }
 }
 
-/* ---------- Interim: wizard and output, re-skinned by the generator task ---------- */
-:root { --transition: 0.2s ease; }
-/* ---------- Wizard ---------- */
-.wizard {
-  background: var(--bg);
-  border: 1px solid var(--rule-faint);
-  padding: 40px;
-  margin: 64px 0 96px;
+
+/* ---------- 13. Generator ---------- */
+/* One column of 46 rem on the header gutter, as the V2 content: not centred */
+.wizard { max-width: 46rem; padding: 3rem 0; }
+
+/* Six boxes: done = inverted, current = full rule + texture, to come = faint rule.
+   The information is always in the « Étape n sur 6 » text, never in the texture. */
+.steps { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 0.25rem; margin-bottom: 0.75rem; }
+.steps i { height: 0.5rem; border: 1px solid var(--rule-faint); }
+.steps i.done { background: var(--text); border-color: var(--text); }
+.steps i.cur {
+  border-color: var(--rule);
+  background: repeating-linear-gradient(45deg, var(--text) 0 2px, transparent 2px 6px);
 }
-
-.progress { height: 4px; background: var(--rule-faint); overflow: hidden; margin-bottom: 10px; }
-.progress-bar { height: 100%; background: var(--text); transition: width 0.25s ease; }
-
+@media (forced-colors: active) { .steps i.cur { background: none; border-style: dashed; } }
 .step-count {
-  font-size: 11px;
+  margin-bottom: 0.5rem;
+  font: 400 0.8125rem/1.4 var(--font-display);
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  letter-spacing: 2px;
   color: var(--muted);
-  margin-bottom: 24px;
 }
+.wizard h2 { font-size: 1.5rem; margin-bottom: 0; }
+.step-intro { max-width: 40rem; margin: 0.5rem 0 1rem; color: var(--muted); }
+.with-mark { display: flex; align-items: center; gap: 0.75rem; }
+.with-mark .pix { width: 1.75rem; height: 1.75rem; }
 
-.wizard h2 { margin: 0 0 6px; font-size: 1.4rem; }
-.wizard .step-intro { color: var(--muted); margin: 0 0 24px; font-size: 15px; }
-
-.field { margin-bottom: 24px; }
-.field label.q-label { display: block; font-weight: 600; font-size: 15px; color: var(--heading); margin-bottom: 4px; }
-.field .optional-tag { font-weight: 400; color: var(--muted); font-size: 13px; }
-.field .help { font-size: 13px; color: var(--muted); margin: 0 0 8px; }
-
-.field input[type="text"],
-.field textarea,
-.field select {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--rule-faint);
-  background: var(--bg);
-  color: var(--text);
-  font: inherit;
-  font-size: 15px;
-  transition: border-color var(--transition);
-}
-.field textarea { min-height: 110px; resize: vertical; }
-.field input:focus, .field textarea:focus, .field select:focus {
-  outline: none;
-  border-color: var(--text);
-}
-
-.field .error { display: none; color: var(--text); font-size: 13px; margin-top: 5px; }
-.field.invalid .error { display: block; }
-.field.invalid input, .field.invalid textarea { border-color: var(--text); }
-
-.choice-list { display: flex; flex-direction: column; gap: 8px; }
-.choice-list label {
+.pnote {
   display: flex;
+  gap: 0.75rem;
   align-items: flex-start;
-  gap: 10px;
-  padding: 10px 12px;
-  border: 1px solid var(--rule-faint);
-  background: var(--bg);
-  cursor: pointer;
-  font-size: 15px;
-  transition: border-color var(--transition), background var(--transition);
-}
-.choice-list label:has(input:checked) { border-color: var(--text); background: transparent; }
-.choice-list input { margin-top: 5px; accent-color: var(--text); }
-
-.privacy-note {
-  display: flex;
-  gap: 10px;
-  background: transparent;
-  border-left: 3px solid var(--text);
-  padding: 12px 16px;
-  font-size: 14px;
-  color: var(--text);
-  margin-bottom: 24px;
-  line-height: 1.6;
-}
-
-.wizard-nav { display: flex; justify-content: space-between; margin-top: 32px; }
-
-/* ---------- Output ---------- */
-.tabs { display: flex; gap: 8px; border-bottom: 1px solid var(--rule-faint); margin-bottom: 24px; }
-.tabs button {
-  border: none;
-  background: transparent;
-  color: var(--muted);
-  font: inherit;
-  font-weight: 600;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 10px 16px;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  transition: color var(--transition), border-color var(--transition);
-}
-.tabs button.active { color: var(--text); border-bottom-color: var(--text); }
-
-.output-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
-
-pre.preview {
-  background: var(--bg);
-  border: 1px solid var(--rule-faint);
-  padding: 16px 20px;
-  font-size: 0.82rem;
+  margin: 0.75rem 0;
+  padding: 1rem;
+  border: 1px solid var(--rule);
+  font-size: var(--text-secondary);
   line-height: 1.5;
-  overflow-x: auto;
-  max-height: 420px;
-  overflow-y: auto;
+}
+.pnote p { margin: 0; }
+
+.field { margin: 1.5rem 0; }
+.q-label { display: block; margin-bottom: 0.375rem; font-weight: 600; font-size: 1rem; }
+.field .help { margin-bottom: 0.5rem; font-size: var(--text-secondary); line-height: 1.5; color: var(--muted); }
+.field input[type="text"],
+.field textarea {
+  display: block;
+  width: 100%;
+  min-height: var(--target);
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-interactive);
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 1rem;
+}
+.field textarea { min-height: 7rem; resize: vertical; }
+.field.invalid input[type="text"], .field.invalid textarea { border: 3px double var(--rule); }
+.field.invalid .choices { outline: 3px double var(--rule); outline-offset: 0.25rem; }
+.field-err { display: flex; gap: 0.5rem; align-items: center; margin: 0.5rem 0 0; font-size: var(--text-secondary); }
+.field-err[hidden] { display: none; }
+.field-err .pix { width: 1rem; height: 1rem; }
+
+/* Single choice = a lozenge (a square turned 45 degrees, no rounding);
+   multiple choice = a square box. The two shapes never get mixed up. */
+.choices { display: flex; flex-direction: column; }
+.choice { display: flex; align-items: center; gap: 0.75rem; min-height: var(--target); margin: 0; cursor: pointer; }
+.choice input {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  display: inline-grid;
+  place-content: center;
+  margin: 0;
+  border: 2px solid var(--border-interactive);
+  background: transparent;
+  cursor: pointer;
+}
+.choice input::after { content: ""; background: var(--text); transform: scale(0); }
+.choice input:checked::after { transform: scale(1); }
+.choice input[type="checkbox"] { width: 1.5rem; height: 1.5rem; }
+.choice input[type="checkbox"]::after { width: 0.625rem; height: 0.625rem; }
+.choice input[type="radio"] { width: 0.95rem; height: 0.95rem; margin: 0 0.3rem; transform: rotate(45deg); }
+.choice input[type="radio"]::after { width: 0.4rem; height: 0.4rem; }
+
+.wnav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule-faint);
+}
+
+/* ---------- 14. Output ---------- */
+.tabs { display: flex; flex-wrap: wrap; margin: 1.5rem 0 1rem; border-bottom: 2px solid var(--rule); }
+.tabs button {
+  min-height: var(--target);
+  margin-right: -1px;
+  padding: 0 1rem;
+  border: 1px solid var(--rule);
+  border-bottom: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: var(--text-secondary);
+  cursor: pointer;
+}
+.tabs button[aria-selected="true"] { background: var(--text); color: var(--bg); }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1rem 0; }
+.is-copied { background: var(--text); color: var(--bg); }
+.sr-live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.preview {
+  max-height: 24rem;
+  overflow: auto;
+  padding: 1rem;
+  border: 1px solid var(--rule);
+  font: 400 0.8125rem/1.5 var(--font-display);
   white-space: pre-wrap;
   word-break: break-word;
 }
+.install { margin-top: 1.5rem; }
+.install h3 { font-size: 1.125rem; }
+.install h4 { margin: 1rem 0 0.25rem; font-family: var(--font-body); font-size: 1rem; font-weight: 600; }
+.install ol { padding-left: 1.5rem; font-size: var(--text-secondary); }
 
-.install-steps { margin-top: 24px; font-size: 14px; }
-.install-steps h3 { margin: 0 0 4px; }
-.install-steps h4 { margin: 18px 0 5px; }
-.install-steps ol { margin: 4px 0 0; padding-left: 20px; color: var(--muted); }
-.install-steps code {
-  background: transparent;
-  color: var(--text);
-  padding: 1px 6px;
-  font-size: 0.85em;
+@media (max-width: 767.98px) {
+  .wizard { padding: 2rem 0; }
+  .wnav .btn { flex: 1; justify-content: center; }
 }
-
-.tab-explain { color: var(--muted); font-size: 14px; margin: 0 0 20px; }
-
-
-@media (max-width: 767px) { .wizard { padding: 24px 20px; margin: 40px 0 64px; } }
