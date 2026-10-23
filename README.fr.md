@@ -5,7 +5,8 @@
 **Un service de [AI-GMENTED.pm](https://ai-gmented.pm)**, hébergé sur [forge.ai-gmented.pm](https://forge.ai-gmented.pm).
 
 **Licence** : [CC BY 4.0](LICENSE) pour l'ensemble du dépôt, templates de skills
-compris. Réutilisez, adaptez, vendez ce que vous en tirez, et gardez le crédit
+compris, sauf `css/fonts/` (IBM Plex), qui reste sous SIL Open Font License 1.1
+(`css/fonts/LICENSE-IBM-Plex.txt`). Réutilisez, adaptez, vendez ce que vous en tirez, et gardez le crédit
 visible. Les skills que **vous** générez vous appartiennent, usage commercial
 inclus, sans attribution requise. La marque AI-GMENTED reste réservée, ce qu'une
 licence de droit d'auteur ne couvre pas : voir [NOTICE](NOTICE).
