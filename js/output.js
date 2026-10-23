@@ -1,5 +1,6 @@
 import { createZip } from './zip.js';
 import { t } from './i18n.js';
+import { pixelMark } from './pixel-marks.js';
 
 export async function copyToClipboard(text, button) {
   try {
@@ -14,9 +15,17 @@ export async function copyToClipboard(text, button) {
     ta.remove();
   }
   if (button) {
-    const original = button.textContent;
-    button.textContent = t('out.copied');
-    setTimeout(() => { button.textContent = original; }, 1800);
+    // « Copié » with a pixel tick; also announced, since the colour change says nothing
+    const original = button.innerHTML;
+    button.innerHTML = `${pixelMark('check')} ${t('out.copied')}`;
+    button.classList.add('is-copied');
+    const status = document.getElementById('copy-status');
+    if (status) status.textContent = t('out.copied');
+    setTimeout(() => {
+      button.innerHTML = original;
+      button.classList.remove('is-copied');
+      if (status) status.textContent = '';
+    }, 1800);
   }
 }
 

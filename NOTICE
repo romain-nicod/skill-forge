@@ -18,6 +18,11 @@ not satisfy the licence.
 If you modify this work, say so, so that nobody attributes your changes to
 the original.
 
+FONTS
+-----
+The IBM Plex files in css/fonts/ are not covered by the licence above: they
+remain under the SIL Open Font License 1.1, see css/fonts/LICENSE-IBM-Plex.txt.
+
 SKILLS YOU GENERATE
 -------------------
 Skills generated through the Skill Forge interface, hosted at

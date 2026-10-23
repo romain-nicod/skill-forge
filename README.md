@@ -5,7 +5,8 @@
 **A service by [AI-GMENTED.pm](https://ai-gmented.pm)**, hosted at [forge.ai-gmented.pm](https://forge.ai-gmented.pm).
 
 **Licence**: [CC BY 4.0](LICENSE) across the whole repository, skill templates
-included. Reuse it, adapt it, sell what you build with it, and keep the credit
+included, except `css/fonts/` (IBM Plex), which stays under the SIL Open Font
+License 1.1 (`css/fonts/LICENSE-IBM-Plex.txt`). Reuse it, adapt it, sell what you build with it, and keep the credit
 visible. The skills **you** generate belong to you, commercial use included,
 with no attribution required. The AI-GMENTED name stays reserved, which a
 copyright licence does not cover: see [NOTICE](NOTICE).
@@ -76,12 +77,15 @@ fully static, dragging the files into the Manager's web FTP works too.
 ```
 index.html                       Skill catalogue, LinkedIn call to action, contact
 generator.html?skill=<id>        The personalisation wizard, generic
-css/style.css                    AI-GMENTED.pm styling, light and dark
+css/style.css                    V2 tokens, light and dark
+css/fonts/                       IBM Plex Sans and Mono, self-hosted
+bin/check                        Guards the shared identity (see Design)
 js/
   app.js                         Wizard engine, driven by the manifest
   template-engine.js             Small {{var}} / {{#if}} / {{#each}} engine
   i18n.js                        Language switch
-  theme.js                       Light and dark switch, plus the mobile menu
+  theme.js                       Light and dark switch (?theme=, then local storage)
+  pixel-marks.js                 8 x 8 ink marks, inline SVG
   contact.js                     Contact form (CSRF and AJAX, mailto fallback)
   output.js                      Copy and .zip download
   zip.js                         Minimal ZIP writer, no dependency
@@ -100,10 +104,15 @@ changes: the wizard is entirely manifest-driven.
 
 ## Design, and how it sits with AI-GMENTED.pm
 
-The site follows the [ai-gmented.pm](https://ai-gmented.pm) styling: the orange
-accent `#C2661A`, system fonts, and the parent site's navigation and footer. The
-dark theme (the sun and moon button, remembered in localStorage) keeps the
-orange accent for links, lightened to `#E8853B` for AA contrast.
+The Forge shares the identity of the [ai-gmented.pm](https://ai-gmented.pm) V2 site:
+the same paper and ink tokens (no accent colour, orange is gone), IBM Plex Sans and
+IBM Plex Mono self-hosted in `css/fonts/`, the same header (Services, About, Skill
+Forge marked as the current page, EN | FR, moon and sun theme button, "Book a call")
+and footer, 8 x 8 pixel marks (`js/pixel-marks.js`) instead of emojis. The theme
+(the sun and moon button, remembered in localStorage, or sent by the site in
+`?theme=`) is the inversion of light. Run `bin/check` before a pull request: it
+fails on an orange colour, an emoji in the HTML, a link to an anchor of the old
+home, or a referenced file that does not exist.
 
 **Contact form.** It posts to `/contact.php`, included in the repository and the
 same handler as the parent site: HMAC CSRF without a cookie, a honeypot, rate

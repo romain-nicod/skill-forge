@@ -5,7 +5,8 @@
 **Un service de [AI-GMENTED.pm](https://ai-gmented.pm)**, hébergé sur [forge.ai-gmented.pm](https://forge.ai-gmented.pm).
 
 **Licence** : [CC BY 4.0](LICENSE) pour l'ensemble du dépôt, templates de skills
-compris. Réutilisez, adaptez, vendez ce que vous en tirez, et gardez le crédit
+compris, sauf `css/fonts/` (IBM Plex), qui reste sous SIL Open Font License 1.1
+(`css/fonts/LICENSE-IBM-Plex.txt`). Réutilisez, adaptez, vendez ce que vous en tirez, et gardez le crédit
 visible. Les skills que **vous** générez vous appartiennent, usage commercial
 inclus, sans attribution requise. La marque AI-GMENTED reste réservée, ce qu'une
 licence de droit d'auteur ne couvre pas : voir [NOTICE](NOTICE).
@@ -62,7 +63,8 @@ js/
   app.js                         Moteur du wizard (piloté par le manifest)
   template-engine.js             Mini-moteur {{var}} / {{#if}} / {{#each}}
   i18n.js                        Bascule FR/EN
-  theme.js                       Bascule light/dark (lune/soleil) + menu mobile
+  theme.js                       Bascule clair/sombre (?theme=, puis stockage local)
+  pixel-marks.js                 Marques 8 × 8 à l'encre, SVG en ligne
   contact.js                     Formulaire de contact (CSRF + AJAX, fallback mailto)
   output.js                      Copie + téléchargement .zip
   zip.js                         Écriture ZIP minimale (aucune dépendance)
@@ -79,7 +81,7 @@ skills/
 
 ## Design & intégration AI-GMENTED.pm
 
-Le site reprend la charte graphique de [ai-gmented.pm](https://ai-gmented.pm) : accent orange `#C2661A`, system fonts, menu de navigation et footer du site maître. Le thème sombre (bouton lune/soleil, préférence mémorisée en localStorage) conserve l'accent orange pour les liens (`#E8853B`, éclairci pour le contraste AA).
+La Forge partage l'identité du site V2 de [ai-gmented.pm](https://ai-gmented.pm) : mêmes jetons papier et encre (aucun accent, l'orange a disparu), IBM Plex Sans et IBM Plex Mono auto-hébergées dans `css/fonts/`, même en-tête (Services, À propos, Skill Forge marqué comme page courante, EN | FR, bouton lune/soleil, « Réserver un appel ») et même pied de page, marques pixel 8 × 8 (`js/pixel-marks.js`) à la place des émojis. Le thème (bouton lune/soleil, mémorisé en localStorage, ou transmis par le site dans `?theme=`) est l'inversion du clair. Lancer `bin/check` avant une pull request : il échoue sur une couleur orange, un émoji dans le HTML, un lien vers une ancre de l'ancien accueil ou un fichier référencé absent.
 
 **Formulaire de contact** : il poste vers `/contact.php` (inclus dans le repo — même handler que le site maître : CSRF HMAC sans cookie, honeypot, rate limiting, envoi SMTP local Infomaniak). Il est déployé automatiquement avec le site ; sur GitHub Pages (pas de PHP), la page bascule automatiquement sur un lien e-mail direct. Durcissement recommandé : définir la variable d'environnement `CSRF_SECRET` côté serveur (sinon un secret dérivé du chemin d'installation est utilisé).
 

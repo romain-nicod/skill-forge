@@ -1,0 +1,76 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# bin/check — guards the identity shared with the V2 site (no dependency).
+# Fails (exit 1) if the Forge still has:
+#   1. an orange colour (#C2661A, #AD5A15, the old dark orange, --accent*),
+#   2. an emoji in the HTML (pixel marks replace them) or in the scripts,
+#   3. a link to an anchor of the old V2/V1 home (#who, #expertise, #track-record, #approach),
+#   4. a file referenced from a page, a stylesheet or a script that does not exist.
+# Run from anywhere: bin/check
+
+require "pathname"
+
+ROOT = Pathname.new(__dir__).parent.realpath
+HTML = Dir.glob(ROOT.join("{,en/}*.html").to_s).sort
+CSS  = Dir.glob(ROOT.join("css/*.css").to_s).sort
+JS   = Dir.glob(ROOT.join("js/*.js").to_s).sort
+
+errors = []
+rel = ->(path) { Pathname.new(path).relative_path_from(ROOT).to_s }
+
+# 1. Orange --------------------------------------------------------------
+ORANGE = /#(?:C2661A|AD5A15|E8853B|FFF3E8|2C2118)\b|--accent/i
+(CSS + HTML + JS).each do |file|
+  File.readlines(file, encoding: "UTF-8").each_with_index do |line, i|
+    errors << "#{rel[file]}:#{i + 1}: orange colour or accent token: #{line.strip[0, 80]}" if line.match?(ORANGE)
+  end
+end
+
+# 2. Emoji ---------------------------------------------------------------
+EMOJI = /[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}\u{2300}-\u{23FF}]/
+(HTML + JS).each do |file|
+  File.readlines(file, encoding: "UTF-8").each_with_index do |line, i|
+    errors << "#{rel[file]}:#{i + 1}: emoji (use a pixel mark): #{line.strip[0, 80]}" if line.match?(EMOJI)
+  end
+end
+
+# 3. Anchors of the old home ----------------------------------------------
+OLD_ANCHOR = /href="[^"]*#(?:who|expertise|track-record|approach)"/
+(HTML + JS).each do |file|
+  File.readlines(file, encoding: "UTF-8").each_with_index do |line, i|
+    errors << "#{rel[file]}:#{i + 1}: link to an anchor of the old home" if line.match?(OLD_ANCHOR)
+  end
+end
+
+# 4. Referenced files exist ------------------------------------------------
+check_ref = lambda do |from, ref|
+  return if ref.nil? || ref.empty?
+  return if ref.match?(%r{\A(?:[a-z][a-z0-9+.-]*:|//|#|/)}i) # absolute URL, mailto:, data:, fragment, server path
+
+  clean = ref.sub(/[?#].*\z/, "")
+  return if clean.empty?
+
+  target = (Pathname.new(from).dirname + clean).cleanpath
+  target = target.join("index.html") if clean.end_with?("/") || clean == "." || clean == ".."
+  errors << "#{rel[from]}: references a missing file: #{ref}" unless target.exist?
+end
+
+HTML.each do |file|
+  text = File.read(file, encoding: "UTF-8")
+  text.scan(/\b(?:href|src)="([^"]*)"/) { |(ref)| check_ref.call(file, ref) }
+end
+CSS.each do |file|
+  File.read(file, encoding: "UTF-8").scan(/url\(\s*["']?([^"')]+)["']?\s*\)/) { |(ref)| check_ref.call(file, ref) }
+end
+JS.each do |file|
+  File.read(file, encoding: "UTF-8").scan(/\bfrom\s+['"](\.[^'"]+)['"]/) { |(ref)| check_ref.call(file, ref) }
+end
+
+if errors.empty?
+  puts "bin/check: OK (#{HTML.size} pages, #{CSS.size} stylesheet, #{JS.size} scripts)"
+else
+  puts errors
+  puts "bin/check: #{errors.size} problem(s)"
+  exit 1
+end

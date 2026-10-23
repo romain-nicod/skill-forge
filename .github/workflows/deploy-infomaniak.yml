@@ -38,4 +38,5 @@ jobs:
             **/.git*/**
             **/.github/**
             **/node_modules/**
+            **/bin/**
             **/README.md
