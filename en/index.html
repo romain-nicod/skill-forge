@@ -25,7 +25,7 @@
   <link rel="icon" type="image/png" href="../favicon.png" />
   <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
   <script src="../js/theme.js?v=4"></script>
-  <link rel="stylesheet" href="../css/style.css?v=6" />
+  <link rel="stylesheet" href="../css/style.css?v=7" />
 </head>
 <body>
   <a href="#main" class="skip-nav">Skip to content</a>
@@ -55,72 +55,67 @@
     <a class="btn site-cta" href="https://ai-gmented.pm/#contact">Book a call</a>
   </header>
 
-  <main id="main" role="main">
+  <main id="main">
     <section class="hero" aria-labelledby="hero-heading">
       <div class="container">
-        <div class="forge-mark" aria-hidden="true">⚒️</div>
+        <svg class="pix hero-mark" viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path d="M1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM1 1h1v1h-1zM2 1h1v1h-1zM3 1h1v1h-1zM5 1h1v1h-1zM2 2h1v1h-1zM4 2h1v1h-1zM3 3h1v1h-1zM0 4h1v1h-1zM1 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM7 4h1v1h-1zM1 5h1v1h-1zM2 5h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM5 5h1v1h-1zM6 5h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM1 7h1v1h-1zM2 7h1v1h-1zM3 7h1v1h-1zM4 7h1v1h-1zM5 7h1v1h-1zM6 7h1v1h-1z"/></svg>
         <h1 id="hero-heading">Claude skills tailored to your context</h1>
-        <div class="tagline">
-          <span>A service by</span>
-          <a href="https://ai-gmented.pm/?lang=en">AI-GMENTED<span class="pm">.pm</span></a>
-        </div>
+        <p class="kicker"><span>A service by</span> <a href="https://ai-gmented.pm/">AI-GMENTED<span class="pm">.pm</span></a></p>
         <p class="value-prop">A good skill carries your jargon, your projects and your stakes. Built for your recurring meetings: answer a few questions once, then simply run the skill at every meeting — your answers never leave your browser.</p>
         <p class="intro">The Skill Forge turns your project context into working tools: answer a short questionnaire once (~5 min) and walk away with a ready-to-install Claude skill — meeting minutes that capture decisions and what was left unsaid, a meeting coach, backlog extraction. No account, no API key: everything is generated in your browser.</p>
       </div>
     </section>
 
-    <section id="catalog-section" aria-label="Catalog">
+    <section id="catalog-section" class="sec" aria-label="Catalog">
       <div class="container">
-        <div class="section-label">Skill Forge</div>
-        <div class="cards" id="catalog" aria-live="polite"></div>
+        <p class="label">Skill Forge</p>
+        <div id="catalog" aria-live="polite"><div class="loading" role="status"><p>Loading the catalog…</p><div class="dashbar" aria-hidden="true"></div></div></div>
       </div>
     </section>
 
-    <section id="more-skills" aria-labelledby="more-heading">
+    <section id="more-skills" class="sec" aria-labelledby="more-heading">
       <div class="container">
-        <div class="section-label">Complementary skills</div>
-        <div class="more-skills-inner">
-          <div class="ms-icon" aria-hidden="true">⬡</div>
+        <p class="label">Complementary skills</p>
+        <div class="more-wrap"><div class="more">
+          <svg class="pix more-mark" viewBox="0 0 8 8" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path d="M3 0h1v1h-1zM4 0h1v1h-1zM3 1h1v1h-1zM4 1h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM0 3h1v1h-1zM1 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM7 3h1v1h-1zM0 4h1v1h-1zM1 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM7 4h1v1h-1zM3 5h1v1h-1zM4 5h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM3 7h1v1h-1zM4 7h1v1h-1z"/></svg>
           <div>
             <h2 id="more-heading">Missing a skill in your forge?</h2>
             <p>Candidate debrief, risk review, steering committee prep… Tell us which skill would accelerate your projects: we keep forging new ones, prioritised on demand.</p>
           </div>
-          <a class="cta-link" href="https://www.linkedin.com/company/ai-gmented-pm/about/" target="_blank" rel="noopener noreferrer">
-            <span>Request a skill on LinkedIn</span> <span class="arrow">→</span>
-          </a>
-        </div>
+          <a class="btn btn-s" href="https://www.linkedin.com/company/ai-gmented-pm/about/" target="_blank" rel="noopener noreferrer">Request a skill on LinkedIn <span aria-hidden="true">→</span></a>
+        </div></div>
       </div>
     </section>
 
-    <section id="contact" aria-labelledby="contact-heading">
+    <section id="contact" class="sec" aria-labelledby="contact-heading">
       <div class="container">
-        <div class="section-label">Contact</div>
+        <p class="label">Contact</p>
         <h2 id="contact-heading">Let’s talk.</h2>
-        <div class="contact-layout">
+        <div class="contact">
           <div class="contact-form-wrap">
             <form class="contact-form" id="contact-form" action="/contact.php" method="POST" aria-label="Contact form">
               <input type="hidden" name="csrf_token" id="csrf_token" />
               <div class="hp" aria-hidden="true"><input type="text" name="website" tabindex="-1" autocomplete="off" /></div>
               <label for="name">Your name</label>
               <input type="text" id="name" name="name" autocomplete="name" />
-              <label for="email"><span>Your email</span> <span class="required">*</span></label>
-              <input type="email" id="email" name="email" required autocomplete="email" />
+              <label for="email">Your email <span class="opt">(required)</span></label>
+              <input type="email" id="email" name="email" required aria-required="true" autocomplete="email" />
               <label for="message">How can we help?</label>
               <textarea id="message" name="message"></textarea>
               <div class="consent">
                 <input type="checkbox" id="consent" name="consent" required />
                 <label for="consent">I consent to AI-GMENTED.pm processing my data to respond to this enquiry.</label>
               </div>
-              <button type="submit" class="btn btn-primary"><span>Send message</span> <span class="arrow">→</span></button>
+              <button type="submit" class="btn"><span>Send message</span> <span class="arrow" aria-hidden="true">→</span></button>
               <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
             </form>
           </div>
           <div class="contact-aside">
             <h3>Prefer a direct conversation?</h3>
             <p>Visit our LinkedIn page to learn more about AI-GMENTED.pm and connect with us.</p>
-            <a href="https://www.linkedin.com/company/ai-gmented-pm/" class="cta-link" target="_blank" rel="noopener noreferrer" aria-label="Visit AI-GMENTED.pm on LinkedIn (opens in new tab)">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853.0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601.0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144.0-2.063-.926-2.063-2.065.0-1.138.92-2.063 2.063-2.063 1.14.0 2.064.925 2.064 2.063.0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225.0H1.771C.792.0.0.774.0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2.0 22.222.0h.003z"/></svg>
-              AI-GMENTED<span class="pm">.pm</span> <span class="arrow">→</span>
+            <a href="https://www.linkedin.com/company/ai-gmented-pm/" class="btn btn-s" target="_blank" rel="noopener noreferrer" aria-label="Visit AI-GMENTED.pm on LinkedIn (opens in new tab)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853.0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601.0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144.0-2.063-.926-2.063-2.065.0-1.138.92-2.063 2.063-2.063 1.14.0 2.064.925 2.064 2.063.0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225.0H1.771C.792.0.0.774.0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2.0 22.222.0h.003z"/></svg>
+              AI-GMENTED.pm <span aria-hidden="true">→</span>
             </a>
           </div>
         </div>
@@ -141,7 +136,7 @@
   </footer>
 
   <script src="../js/analytics.js" defer></script>
-  <script type="module" src="../js/home.js?v=2"></script>
+  <script type="module" src="../js/home.js?v=3"></script>
   <script type="module" src="../js/contact.js"></script>
 </body>
 </html>
