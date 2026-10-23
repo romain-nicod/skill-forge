@@ -1,13 +1,11 @@
 const STRINGS = {
   fr: {
     'label.error': 'Erreur : ',
-    'label.success': 'Succès : ',
     'label.required': '(obligatoire)',
     'action.reload': 'Recharger la page',
     'action.retry': 'Réessayer',
     'wizard.generating': 'Génération…',
     'wizard.generatingStatus': 'Génération du skill dans votre navigateur…',
-    'home.loading': 'Chargement du catalogue…',
     'home.error': 'Catalogue indisponible — rechargez la page.',
     'home.heroTitle': 'Des skills Claude taillés pour votre contexte',
     'home.heroSubtitle':
@@ -83,13 +81,11 @@ const STRINGS = {
   },
   en: {
     'label.error': 'Error: ',
-    'label.success': 'Success: ',
     'label.required': '(required)',
     'action.reload': 'Reload the page',
     'action.retry': 'Try again',
     'wizard.generating': 'Generating…',
     'wizard.generatingStatus': 'Generating the skill in your browser…',
-    'home.loading': 'Loading the catalog…',
     'home.error': 'Catalog unavailable — please reload.',
     'home.heroTitle': 'Claude skills tailored to your context',
     'home.heroSubtitle':
